@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zaba37.easyreader.controllers.OCRSettingsWndowController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <BorderPane prefHeight="251.0" prefWidth="285.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <left>
+                  <ListView fx:id="optionListView" onMouseClicked="#handleListMouseClick" prefHeight="370.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+               </left>
+               <bottom>
+                  <VBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Separator maxWidth="1.7976931348623157E308" prefWidth="200.0" />
+                        <HBox alignment="TOP_RIGHT">
+                           <children>
+                              <Button fx:id="applyOcrSettingsButton" maxHeight="22.0" minHeight="22.0" mnemonicParsing="false" onAction="#handleApplyButtonClick" text="Apply" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="1.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="cancelOcrSettingsButton" maxHeight="22.0" minHeight="22.0" mnemonicParsing="false" onAction="#handleCancelButtonClick" text="Cancel" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="1.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </bottom>
+               <center>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <GridPane fx:id="languageGridPane" layoutX="100.0" layoutY="140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Separator prefWidth="200.0" />
+                                    <Label maxWidth="1.7976931348623157E308" text="Language data ">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="27.0" prefWidth="200.0">
+                                       <children>
+                                          <Label prefHeight="27.0" prefWidth="158.0" text="Path to the language data">
+                                             <HBox.margin>
+                                                <Insets right="4.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="languageDataPathTextField" minWidth="220.0">
+                                             <HBox.margin>
+                                                <Insets right="4.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Button fx:id="languageDataPathChooserButton" mnemonicParsing="false" onAction="#handleImageEditorActions" text="..." />
+                                       </children>
+                                    </HBox>
+                                    <Label fx:id="checkLanguageDataField" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets top="4.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </GridPane.margin>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <Separator prefWidth="200.0" />
+                                    <Label maxWidth="1.7976931348623157E308" text="OCR Language">
+                                       <font>
+                                          <Font name="System Bold Italic" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="200.0">
+                                       <children>
+                                          <Label prefHeight="30.0" text="Select language" textAlignment="CENTER">
+                                             <HBox.margin>
+                                                <Insets right="4.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <ComboBox fx:id="languageSelectorComboBox" prefWidth="250.0" />
+                                       </children>
+                                    </HBox>
+                                    <Label fx:id="checkSelectedLanguageField" alignment="TOP_CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER" textFill="RED" visible="false">
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" />
+                                 </GridPane.margin>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+                                 <children>
+                                    <Separator prefWidth="200.0" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" />
+                                 </GridPane.margin>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <GridPane fx:id="ocrOptionsGridPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
