@@ -16,7 +16,7 @@
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <GridPane BorderPane.alignment="CENTER">
+            <GridPane gridLinesVisible="true" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,15 +26,15 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ScrollPane prefViewportHeight="525.0" prefViewportWidth="310.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <content>
-                        <VBox alignment="CENTER" style="-fx-background-color: ffffff;">
-                           <children>
+<!--                  <ScrollPane fx:id="textScrollPane" prefViewportHeight="525.0" prefViewportWidth="310.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <content>-->
+                        <VBox fx:id="textVBox" minHeight="${imageScrollPane.viewportBounds.height}" minWidth="${imageScrollPane.viewportBounds.width}" style="-fx-background-color: 000000;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+<!--                           <children>
                               <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="NEVER" />
-                           </children>
+                           </children>-->
                         </VBox>
-                     </content>
-                  </ScrollPane>
+<!--                     </content>
+                  </ScrollPane>-->
                   <ScrollPane fx:id="imageScrollPane" fitToHeight="true" minHeight="${imagePane.viewportBounds.height}" minWidth="${imagePane.viewportBounds.width}" prefHeight="249.0" prefWidth="287.0" GridPane.rowIndex="1">
                      <content>
                           <VBox alignment="CENTER" minWidth="${imageScrollPane.viewportBounds.width}">
