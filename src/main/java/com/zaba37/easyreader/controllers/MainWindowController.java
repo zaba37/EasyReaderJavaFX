@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -158,13 +159,6 @@ public class MainWindowController implements Initializable {
                 showImagesListButton.setLayoutY(newSceneHeight.doubleValue() / 2 - showImagesListButton.getHeight() / 2);
                 hideImagesListButton.setLayoutY(newSceneHeight.doubleValue() / 2 - hideImagesListButton.getHeight() / 2);
                 Utils.setMainWindow(borderPaneLeft.getScene().getWindow());
-
-                textEditorScrollGroup = new Group(textArea);
-                textZoomPane = createZoomPane(textEditorScrollGroup);
-                textVBox.getChildren().add(textZoomPane);
-
-                // textVBox.setMinWidth(textScrollPane.getWidth());
-                // textVBox.setMinHeight(textScrollPane.getHeight());
             }
         });
 
@@ -174,10 +168,30 @@ public class MainWindowController implements Initializable {
         hideImagesListButton.setVisible(false);
         showImagesListButton.setVisible(true);
 
-//        textArea.setMinHeight(Paper.A4.getHeight());
-//        textArea.setMaxHeight(Paper.A4.getHeight());
-//        textArea.setMinWidth(Paper.A4.getWidth());
-//        textArea.setMaxWidth(Paper.A4.getWidth());
+        textArea.setWrapText(true);
+
+        ArrayList<TextArea> list = new ArrayList();
+
+                textEditorScrollGroup = new Group();
+                VBox v = new VBox();
+        
+        for (int i = 0; i < 10; i++) {
+            TextArea a = new TextArea();
+            a.setMinHeight(Paper.A4.getHeight());
+            a.setMaxHeight(Paper.A4.getHeight());
+            a.setMinWidth(Paper.A4.getWidth());
+            a.setMaxWidth(Paper.A4.getWidth());
+            list.add(a);
+            v.getChildren().add(a);
+
+        }
+
+            textEditorScrollGroup.getChildren().add(v);
+
+        textZoomPane = createZoomPane(textEditorScrollGroup);
+        textVBox.getChildren().add(textZoomPane);
+
+        list.get(2).setText("chuj ci w dupe");
     }
 
     @FXML
@@ -320,6 +334,8 @@ public class MainWindowController implements Initializable {
             showImagesListButton.setVisible(false);
 
             currentSelectedItemIndex = 0;
+            
+            refreshTextEditorPane();
         } else {
             loadedItemList = new ArrayList();
         }
@@ -335,12 +351,6 @@ public class MainWindowController implements Initializable {
         final Group scrollContent = new Group(zoomPane);
         scroller.setContent(scrollContent);
 
-        //scroller.setMinHeight(textVBox.getMinHeight());
-        //scroller.setMinWidth(textVBox.getMinWidth());
-
-        //zoomPane.setMinHeight(textVBox.getMinHeight());
-       // zoomPane.setMinWidth(textVBox.getMinWidth());
-
         scroller.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable,
@@ -349,9 +359,8 @@ public class MainWindowController implements Initializable {
             }
         });
 
-        scroller.setPrefViewportWidth(textVBox.getMinWidth());
-        scroller.setPrefViewportHeight(textVBox.getMinHeight());
-
+       // scroller.setPrefViewportWidth();
+       // scroller.setPrefViewportHeight();
         zoomPane.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent event) {
@@ -436,5 +445,9 @@ public class MainWindowController implements Initializable {
         } else {
             scroller.setHvalue(scroller.getHmin());
         }
+    }
+    
+    private void refreshTextEditorPane(){
+        
     }
 }
