@@ -4,6 +4,7 @@ import com.zaba37.easyreader.Utils;
 import com.zaba37.easyreader.actions.menuBar.OpenAction;
 import com.zaba37.easyreader.models.EasyReaderItem;
 import com.zaba37.easyreader.ocr.OcrEngine;
+import com.zaba37.easyreader.textEditor.*;
 import io.github.karols.hocr4j.Page;
 import io.github.karols.hocr4j.dom.HocrParser;
 import java.io.File;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
@@ -47,6 +49,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -58,7 +61,14 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import org.fxmisc.richtext.model.Paragraph;
+import org.fxmisc.richtext.model.StyleSpans;
+import org.reactfx.SuspendableNo;
 import org.w3c.dom.*;
+
+import static org.fxmisc.richtext.model.TwoDimensional.Bias.Backward;
+import static org.fxmisc.richtext.model.TwoDimensional.Bias.Forward;
 
 public class MainWindowController implements Initializable {
 
@@ -111,6 +121,7 @@ public class MainWindowController implements Initializable {
     private ArrayList<EasyReaderItem> loadedItemList;
     private final ObservableList observableList = FXCollections.observableArrayList();
     private int currentSelectedItemIndex;
+    private final SuspendableNo updatingToolbar = new SuspendableNo();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -197,14 +208,20 @@ public class MainWindowController implements Initializable {
         textZoomPane = createZoomPane(textEditorScrollGroup);
         textVBox.getChildren().add(textZoomPane);
 
-        list.get(2).setText("chuj ci w dupe");
-
         //System
 
         textSizeComboBox.setItems(FXCollections.observableArrayList(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40, 48, 56, 64, 72));
         textSizeComboBox.getSelectionModel().select(Integer.valueOf(12));
         textFontComboBox.setItems(FXCollections.observableList(Font.getFamilies()));
         textFontComboBox.getSelectionModel().select("Serif");
+
+        textColorColorPicker.setTooltip(new Tooltip("Text color"));
+        textBackgroundColorColorPicker.setTooltip(new Tooltip("Text background"));
+
+        textSizeComboBox.setOnAction(evt -> updateFontSize(textSizeComboBox.getValue()));
+        textFontComboBox.setOnAction(evt -> updateFontFamily(textFontComboBox.getValue()));
+        textColorColorPicker.valueProperty().addListener((o, old, color) -> updateTextColor(color));
+        textBackgroundColorColorPicker.valueProperty().addListener((o, old, color) -> updateBackgroundColor(color));
     }
 
     @FXML
@@ -400,7 +417,6 @@ public class MainWindowController implements Initializable {
             }
         });
 
-        // Panning via drag....
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
         scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -462,5 +478,95 @@ public class MainWindowController implements Initializable {
     
     private void refreshTextEditorPane(){
         
+    }
+
+
+    private void toggleBold() {
+        updateStyleInSelection(spans -> TextStyle.bold(!spans.styleStream().allMatch(style -> style.bold.orElse(false))));
+    }
+
+    private void toggleItalic() {
+        updateStyleInSelection(spans -> TextStyle.italic(!spans.styleStream().allMatch(style -> style.italic.orElse(false))));
+    }
+
+    private void toggleUnderline() {
+        updateStyleInSelection(spans -> TextStyle.underline(!spans.styleStream().allMatch(style -> style.underline.orElse(false))));
+    }
+
+    private void toggleStrikethrough() {
+        updateStyleInSelection(spans -> TextStyle.strikethrough(!spans.styleStream().allMatch(style -> style.strikethrough.orElse(false))));
+    }
+
+    private void alignLeft() {
+        updateParagraphStyleInSelection(ParStyle.alignLeft());
+    }
+
+    private void alignCenter() {
+        updateParagraphStyleInSelection(ParStyle.alignCenter());
+    }
+
+    private void alignRight() {
+        updateParagraphStyleInSelection(ParStyle.alignRight());
+    }
+
+    private void alignJustify() {
+        updateParagraphStyleInSelection(ParStyle.alignJustify());
+    }
+
+    private void updateStyleInSelection(Function<StyleSpans<TextStyle>, TextStyle> mixinGetter) {
+        IndexRange selection = area.getSelection();
+        if(selection.getLength() != 0) {
+            StyleSpans<TextStyle> styles = area.getStyleSpans(selection);
+            TextStyle mixin = mixinGetter.apply(styles);
+            StyleSpans<TextStyle> newStyles = styles.mapStyles(style -> style.updateWith(mixin));
+            area.setStyleSpans(selection.getStart(), newStyles);
+        }
+    }
+
+    private void updateStyleInSelection(TextStyle mixin) {
+        IndexRange selection = area.getSelection();
+        if (selection.getLength() != 0) {
+            StyleSpans<TextStyle> styles = area.getStyleSpans(selection);
+            StyleSpans<TextStyle> newStyles = styles.mapStyles(style -> style.updateWith(mixin));
+            area.setStyleSpans(selection.getStart(), newStyles);
+        }
+    }
+
+    private void updateParagraphStyleInSelection(Function<ParStyle, ParStyle> updater) {
+        IndexRange selection = area.getSelection();
+        int startPar = area.offsetToPosition(selection.getStart(), Forward).getMajor();
+        int endPar = area.offsetToPosition(selection.getEnd(), Backward).getMajor();
+        for(int i = startPar; i <= endPar; ++i) {
+            Paragraph<ParStyle, TextStyle> paragraph = area.getParagraph(i);
+            area.setParagraphStyle(i, updater.apply(paragraph.getParagraphStyle()));
+        }
+    }
+
+    private void updateParagraphStyleInSelection(ParStyle mixin) {
+        updateParagraphStyleInSelection(style -> style.updateWith(mixin));
+    }
+
+    private void updateFontSize(Integer size) {
+        if(!updatingToolbar.get()) {
+            updateStyleInSelection(TextStyle.fontSize(size));
+        }
+    }
+
+    private void updateFontFamily(String family) {
+        if(!updatingToolbar.get()) {
+            updateStyleInSelection(TextStyle.fontFamily(family));
+        }
+    }
+
+    private void updateTextColor(Color color) {
+        if(!updatingToolbar.get()) {
+            updateStyleInSelection(TextStyle.textColor(color));
+        }
+    }
+
+    private void updateBackgroundColor(Color color) {
+        if(!updatingToolbar.get()) {
+            updateStyleInSelection(TextStyle.backgroundColor(color));
+        }
     }
 }

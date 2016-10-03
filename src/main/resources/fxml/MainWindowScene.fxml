@@ -193,26 +193,29 @@
                                        </HBox.margin>
                                     </Button>
                                     <Separator maxHeight="28.0" orientation="VERTICAL" prefHeight="200.0" />
-                                    <Button fx:id="alginLeftTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-left.png');">
+                                    <ToggleButton fx:id="alginLeftTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-left.png');">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
-                                    </Button>
-                                    <Button fx:id="alginCenterTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-center.png');">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="alginGroup" />
+                                       </toggleGroup>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="alginCenterTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-center.png');" toggleGroup="$alginGroup">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
-                                    </Button>
-                                    <Button fx:id="alginRightTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-right.png');">
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="alginRightTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-right.png');" toggleGroup="$alginGroup">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
-                                    </Button>
-                                    <Button fx:id="alginJustifyTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-justify.png');">
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="alginJustifyTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-justify.png');" toggleGroup="$alginGroup">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
-                                    </Button>
+                                    </ToggleButton>
                                  </children>
                                  <VBox.margin>
                                     <Insets />

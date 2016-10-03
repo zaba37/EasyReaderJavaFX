@@ -120,14 +120,14 @@ public class TextStyle {
         return "rgb(" + red + ", " + green + ", " + blue + ")";
     }
 
-    final Optional<Boolean> bold;
-    final Optional<Boolean> italic;
-    final Optional<Boolean> underline;
-    final Optional<Boolean> strikethrough;
-    final Optional<Integer> fontSize;
-    final Optional<String> fontFamily;
-    final Optional<Color> textColor;
-    final Optional<Color> backgroundColor;
+    public final Optional<Boolean> bold;
+    public final Optional<Boolean> italic;
+    public final Optional<Boolean> underline;
+    public final Optional<Boolean> strikethrough;
+    public final Optional<Integer> fontSize;
+    public final Optional<String> fontFamily;
+    public final Optional<Color> textColor;
+    public final Optional<Color> backgroundColor;
 
     public TextStyle() {
         this(
