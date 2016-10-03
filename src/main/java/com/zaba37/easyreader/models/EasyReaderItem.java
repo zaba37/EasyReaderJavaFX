@@ -85,6 +85,8 @@ public class EasyReaderItem {
 
         area.setWrapText(true);
         area.setStyleCodecs(ParStyle.CODEC, TextStyle.CODEC);
+
+        pagesList.add(area);
     }
 
     public ArrayList<StyledTextArea<ParStyle, TextStyle>> getPagesList() {
