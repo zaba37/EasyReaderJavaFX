@@ -40,20 +40,14 @@ import javafx.print.Paper;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -97,6 +91,18 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private VBox textVBox;
+
+    @FXML
+    private ComboBox<Integer> textSizeComboBox;
+
+    @FXML
+    private ComboBox<String> textFontComboBox;
+
+    @FXML
+    private ColorPicker textColorColorPicker;
+
+    @FXML
+    private ColorPicker textBackgroundColorColorPicker;
 
     private DoubleProperty zoomProperty;
     private Group textEditorScrollGroup;
@@ -186,12 +192,19 @@ public class MainWindowController implements Initializable {
 
         }
 
-            textEditorScrollGroup.getChildren().add(v);
+        textEditorScrollGroup.getChildren().add(v);
 
         textZoomPane = createZoomPane(textEditorScrollGroup);
         textVBox.getChildren().add(textZoomPane);
 
         list.get(2).setText("chuj ci w dupe");
+
+        //System
+
+        textSizeComboBox.setItems(FXCollections.observableArrayList(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40, 48, 56, 64, 72));
+        textSizeComboBox.getSelectionModel().select(Integer.valueOf(12));
+        textFontComboBox.setItems(FXCollections.observableList(Font.getFamilies()));
+        textFontComboBox.getSelectionModel().select("Serif");
     }
 
     @FXML
