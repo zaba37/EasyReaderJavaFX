@@ -11,9 +11,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.zaba37.easyreader.models.EasyReaderItem;
+import com.zaba37.easyreader.textEditor.ParStyle;
+import com.zaba37.easyreader.textEditor.TextStyle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.print.Paper;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.fxmisc.richtext.StyledTextArea;
 
 /**
  *
@@ -147,6 +155,46 @@ public class Utils {
         languageDictionary = Collections.unmodifiableMap(tmpDictionary);
     }
 
+    public static ChangeListener<String> areaOverflowDetector = (observable, oldValue, newValue) -> {
+        StyledTextArea<ParStyle, TextStyle> currentArea = getMainWindowController().getCyrrentFocusTextArea();
+        EasyReaderItem currentItem = getMainWindowController().getCurrentEasyReaderItem();
+        ArrayList<StyledTextArea<ParStyle, TextStyle>> currentPagesList = currentItem.getPagesList();
+
+        if(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
+            System.out.println("new page");
+
+            //HERE ADD NIE PAGE TO LIST IN CURRENT SELECTED ITEM
+            currentItem.addPage();
+
+            //REFRESH PAGES LIST
+            currentPagesList = currentItem.getPagesList();
+
+            StyledTextArea<ParStyle, TextStyle>  newArea = currentPagesList.get(currentPagesList.size() - 1);
+
+            while(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
+                try {
+                    org.fxmisc.richtext.model.StyledDocument areasdasd = currentArea.getDocument().subDocument(currentArea.getParagraphs().size() - 2);
+                    newArea.append(areasdasd);
+
+                    String asdasd = newArea.getText();
+
+                    System.out.println(currentArea.getParagraph(currentArea.getParagraphs().size() - 2).length());
+                    currentArea.deleteText(currentArea.getParagraphs().size() - 2, 0, currentArea.getParagraphs().size() - 1, currentArea.getParagraph(currentArea.getParagraphs().size() - 1).length());
+                }catch (Exception e){
+                    e.getMessage();
+                }
+            }
+
+            getMainWindowController().refreshTextEditorPane();
+        }
+
+        if(currentArea.getText().isEmpty() && currentPagesList.indexOf(currentArea) != 0){
+            System.out.println("remove page");
+            //HERE REMOVE PAGE FROM LIST IN CURRENT SELECTED ITEM
+            Utils.getMainWindowController().refreshTextEditorPane();
+        }
+    };
+
     public static void setMainStage(Stage stage) {
         Utils.mainStage = stage;
     }
@@ -203,7 +251,7 @@ public class Utils {
                 return key;
             }
         }
-        
+
         return null;
     }
 }

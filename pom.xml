@@ -44,7 +44,14 @@
 		<artifactId>ghost4j</artifactId>
 		<version>1.0.1</version>
 	</dependency>
-        
+
+        <!-- https://mvnrepository.com/artifact/org.docx4j/docx4j -->
+        <dependency>
+            <groupId>org.docx4j</groupId>
+            <artifactId>docx4j</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

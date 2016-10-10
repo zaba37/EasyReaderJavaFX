@@ -56,12 +56,12 @@
             <AnchorPane fx:id="borderPaneLeft" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="180.0" BorderPane.alignment="CENTER">
                <children>
                   <ListView fx:id="imagesListView" layoutY="1.0" onMouseClicked="#handleListMouseClick" prefHeight="200.0" prefWidth="180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="hideImagesListButton" layoutX="148.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleHideImagesListButton" prefHeight="84.0" prefWidth="4.0" text="&lt;" textAlignment="RIGHT" AnchorPane.rightAnchor="-2.0">
+                  <Button fx:id="showImagesListButton" layoutY="234.0" mnemonicParsing="false" onAction="#handleShowImagesListButton" prefHeight="84.0" prefWidth="4.0" text="&gt;" visible="false" AnchorPane.leftAnchor="2.0">
                      <font>
                         <Font size="1.0" />
                      </font>
                   </Button>
-                  <Button fx:id="showImagesListButton" layoutY="234.0" mnemonicParsing="false" onAction="#handleShowImagesListButton" prefHeight="84.0" prefWidth="4.0" text="&gt;" visible="false" AnchorPane.leftAnchor="2.0">
+                  <Button fx:id="hideImagesListButton" layoutX="148.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleHideImagesListButton" prefHeight="84.0" prefWidth="4.0" text="&lt;" textAlignment="RIGHT" AnchorPane.rightAnchor="-2.0">
                      <font>
                         <Font size="1.0" />
                      </font>
@@ -172,28 +172,28 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="boldTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/bold.png');">
+                                    <Button fx:id="boldTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#toggleBold" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/bold.png');">
                                        <HBox.margin>
                                           <Insets bottom="2.0" left="2.0" right="2.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button fx:id="italicTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/italic.png');">
+                                    <Button fx:id="italicTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#toggleItalic" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/italic.png');">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button fx:id="underlineTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/underline.png');">
+                                    <Button fx:id="underlineTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#toggleUnderline" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/underline.png');">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
                                     </Button>
-                                    <Button fx:id="strikethroughTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/strikethrough.png');">
+                                    <Button fx:id="strikethroughTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#toggleStrikethrough" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/strikethrough.png');">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
                                     </Button>
                                     <Separator maxHeight="28.0" orientation="VERTICAL" prefHeight="200.0" />
-                                    <ToggleButton fx:id="alginLeftTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-left.png');">
+                                    <ToggleButton fx:id="alginLeftTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#alignLeft" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-left.png');">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
@@ -201,17 +201,17 @@
                                           <ToggleGroup fx:id="alginGroup" />
                                        </toggleGroup>
                                     </ToggleButton>
-                                    <ToggleButton fx:id="alginCenterTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-center.png');" toggleGroup="$alginGroup">
+                                    <ToggleButton fx:id="alginCenterTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#alignCenter" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-center.png');" toggleGroup="$alginGroup">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
                                     </ToggleButton>
-                                    <ToggleButton fx:id="alginRightTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-right.png');" toggleGroup="$alginGroup">
+                                    <ToggleButton fx:id="alginRightTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#alignRight" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-right.png');" toggleGroup="$alginGroup">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>
                                     </ToggleButton>
-                                    <ToggleButton fx:id="alginJustifyTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-justify.png');" toggleGroup="$alginGroup">
+                                    <ToggleButton fx:id="alginJustifyTextButton" focusTraversable="false" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#alignJustify" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url('/image/textEditorResource/align-justify.png');" toggleGroup="$alginGroup">
                                        <HBox.margin>
                                           <Insets bottom="2.0" right="2.0" />
                                        </HBox.margin>

@@ -5,6 +5,7 @@
  */
 package com.zaba37.easyreader.models;
 
+import com.zaba37.easyreader.Utils;
 import com.zaba37.easyreader.textEditor.ParStyle;
 import com.zaba37.easyreader.textEditor.TextStyle;
 import java.awt.geom.AffineTransform;
@@ -12,11 +13,17 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.print.Paper;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import org.fxmisc.richtext.StyledTextArea;
+
+import javax.swing.text.StyledDocument;
 
 /**
  *
@@ -34,6 +41,7 @@ public class EasyReaderItem {
         image = new Image(file.toURI().toString());
         name = file.getName();
         pagesList = new ArrayList();
+        addPage();
     }
 
     public void rotatedImage(double angle) {
@@ -78,13 +86,71 @@ public class EasyReaderItem {
     }
 
     public void addPage() {
-        StyledTextArea<ParStyle, TextStyle> area = new StyledTextArea<>(
+                StyledTextArea<ParStyle, TextStyle> area = new StyledTextArea<>(
                 ParStyle.EMPTY, (paragraph, style) -> paragraph.setStyle(style.toCss()),
                 TextStyle.EMPTY.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK),
                 (text, style) -> text.setStyle(style.toCss()));
 
         area.setWrapText(true);
-        area.setStyleCodecs(ParStyle.CODEC, TextStyle.CODEC);
+        area.setStyleCodecs(ParStyle.CODEC, TextStyle.CODEC);                        // area.();
+
+
+        area.setMinHeight(Paper.A4.getHeight());
+        area.setMaxHeight(Paper.A4.getHeight());
+        area.setMinWidth(Paper.A4.getWidth());
+        area.setMaxWidth(Paper.A4.getWidth());
+
+        area.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue) {
+               // Utils.getMainWindowController().getCyrrentFocusTextArea().textProperty().removeListener(Utils.areaOverflowDetector);
+                Utils.getMainWindowController().setCurrentFocusTextArea(area);
+               // Utils.getMainWindowController().getCyrrentFocusTextArea().textProperty().addListener(Utils.areaOverflowDetector);
+            }
+        });
+
+//        area.textProperty().addListener((observable, oldValue, newValue) -> {
+//            StyledTextArea<ParStyle, TextStyle> currentArea = Utils.getMainWindowController().getCyrrentFocusTextArea();
+//            EasyReaderItem currentItem = Utils.getMainWindowController().getCurrentEasyReaderItem();
+//            ArrayList<StyledTextArea<ParStyle, TextStyle>> currentPagesList = currentItem.getPagesList();
+//
+//            observable.getValue();
+//
+//            if(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
+//                System.out.println("new page");
+//
+//                //HERE ADD NIE PAGE TO LIST IN CURRENT SELECTED ITEM
+//                currentItem.addPage();
+//
+//                //REFRESH PAGES LIST
+//                currentPagesList = currentItem.getPagesList();
+//
+//                StyledTextArea<ParStyle, TextStyle>  newArea = currentPagesList.get(currentPagesList.size() - 1);
+//
+//                while(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
+//                    try {
+//                        org.fxmisc.richtext.model.StyledDocument areasdasd = currentArea.getDocument().subDocument(currentArea.getParagraphs().size() - 2);
+//                        newArea.append(areasdasd);
+//
+//                        String asdasd = newArea.getText();
+//
+//                        System.out.println(currentArea.getParagraph(currentArea.getParagraphs().size() - 2).length());
+//                        currentArea.deleteText(currentArea.getParagraphs().size() - 2, 0, currentArea.getParagraphs().size() - 1, currentArea.getParagraph(currentArea.getParagraphs().size() - 1).length());
+//                    }catch (Exception e){
+//                        e.getMessage();
+//                    }
+//                }
+//
+//                Utils.getMainWindowController().refreshTextEditorPane();
+//            }
+//
+//            if(currentArea.getText().isEmpty() && currentPagesList.indexOf(currentArea) != 0){
+//                System.out.println("remove page");
+//                //HERE REMOVE PAGE FROM LIST IN CURRENT SELECTED ITEM
+//                Utils.getMainWindowController().refreshTextEditorPane();
+//            }
+//        });
+
+        Utils.getMainWindowController().addListenersForArea(area);
 
         pagesList.add(area);
     }
@@ -92,4 +158,45 @@ public class EasyReaderItem {
     public ArrayList<StyledTextArea<ParStyle, TextStyle>> getPagesList() {
         return pagesList;
     }
+
+    public ChangeListener<String> areaOverflowDetector = (observable, oldValue, newValue) -> {
+
+        StyledTextArea<ParStyle, TextStyle> currentArea = Utils.getMainWindowController().getCyrrentFocusTextArea();
+        EasyReaderItem currentItem = Utils.getMainWindowController().getCurrentEasyReaderItem();
+        ArrayList<StyledTextArea<ParStyle, TextStyle>> currentPagesList = currentItem.getPagesList();
+
+        if(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
+            System.out.println("new page");
+
+            //HERE ADD NIE PAGE TO LIST IN CURRENT SELECTED ITEM
+            currentItem.addPage();
+
+            //REFRESH PAGES LIST
+            currentPagesList = currentItem.getPagesList();
+
+            StyledTextArea<ParStyle, TextStyle>  newArea = currentPagesList.get(currentPagesList.size() - 1);
+
+            while(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
+                try {
+                    org.fxmisc.richtext.model.StyledDocument areasdasd = currentArea.getDocument().subDocument(currentArea.getParagraphs().size() - 2);
+                    newArea.append(areasdasd);
+
+                    String asdasd = newArea.getText();
+
+                    System.out.println(currentArea.getParagraph(currentArea.getParagraphs().size() - 2).length());
+                    currentArea.deleteText(currentArea.getParagraphs().size() - 2, 0, currentArea.getParagraphs().size() - 1, currentArea.getParagraph(currentArea.getParagraphs().size() - 1).length());
+                }catch (Exception e){
+                    e.getMessage();
+                }
+            }
+
+            Utils.getMainWindowController().refreshTextEditorPane();
+        }
+
+        if(currentArea.getText().isEmpty() && currentPagesList.indexOf(currentArea) != 0){
+            System.out.println("remove page");
+            //HERE REMOVE PAGE FROM LIST IN CURRENT SELECTED ITEM
+            Utils.getMainWindowController().refreshTextEditorPane();
+        }
+    };
 }
