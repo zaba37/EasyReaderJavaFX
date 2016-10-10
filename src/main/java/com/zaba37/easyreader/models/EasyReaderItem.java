@@ -34,7 +34,7 @@ public class EasyReaderItem {
     private final File imageFile;
     private Image image;
     private final String name;
-    private ArrayList<StyledTextArea<ParStyle, TextStyle>> pagesList;
+    private ArrayList<Page> pagesList;
 
     public EasyReaderItem(File file) {
         this.imageFile = file;
@@ -86,27 +86,27 @@ public class EasyReaderItem {
     }
 
     public void addPage() {
-                StyledTextArea<ParStyle, TextStyle> area = new StyledTextArea<>(
-                ParStyle.EMPTY, (paragraph, style) -> paragraph.setStyle(style.toCss()),
-                TextStyle.EMPTY.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK),
-                (text, style) -> text.setStyle(style.toCss()));
-
-        area.setWrapText(true);
-        area.setStyleCodecs(ParStyle.CODEC, TextStyle.CODEC);                        // area.();
-
-
-        area.setMinHeight(Paper.A4.getHeight());
-        area.setMaxHeight(Paper.A4.getHeight());
-        area.setMinWidth(Paper.A4.getWidth());
-        area.setMaxWidth(Paper.A4.getWidth());
-
-        area.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue) {
-               // Utils.getMainWindowController().getCyrrentFocusTextArea().textProperty().removeListener(Utils.areaOverflowDetector);
-                Utils.getMainWindowController().setCurrentFocusTextArea(area);
-               // Utils.getMainWindowController().getCyrrentFocusTextArea().textProperty().addListener(Utils.areaOverflowDetector);
-            }
-        });
+//                StyledTextArea<ParStyle, TextStyle> area = new StyledTextArea<>(
+//                ParStyle.EMPTY, (paragraph, style) -> paragraph.setStyle(style.toCss()),
+//                TextStyle.EMPTY.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK),
+//                (text, style) -> text.setStyle(style.toCss()));
+//
+//        area.setWrapText(true);
+//        area.setStyleCodecs(ParStyle.CODEC, TextStyle.CODEC);                        // area.();
+//
+//
+//        area.setMinHeight(Paper.A4.getHeight());
+//        area.setMaxHeight(Paper.A4.getHeight());
+//        area.setMinWidth(Paper.A4.getWidth());
+//        area.setMaxWidth(Paper.A4.getWidth());
+//
+//        area.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//            if(newValue) {
+//               // Utils.getMainWindowController().getCyrrentFocusTextArea().textProperty().removeListener(Utils.areaOverflowDetector);
+//                Utils.getMainWindowController().setCurrentFocusTextArea(area);
+//               // Utils.getMainWindowController().getCyrrentFocusTextArea().textProperty().addListener(Utils.areaOverflowDetector);
+//            }
+//        });
 
 //        area.textProperty().addListener((observable, oldValue, newValue) -> {
 //            StyledTextArea<ParStyle, TextStyle> currentArea = Utils.getMainWindowController().getCyrrentFocusTextArea();
@@ -116,7 +116,7 @@ public class EasyReaderItem {
 //            observable.getValue();
 //
 //            if(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
-//                System.out.println("new page");
+//                System.out.println("new Page");
 //
 //                //HERE ADD NIE PAGE TO LIST IN CURRENT SELECTED ITEM
 //                currentItem.addPage();
@@ -144,59 +144,59 @@ public class EasyReaderItem {
 //            }
 //
 //            if(currentArea.getText().isEmpty() && currentPagesList.indexOf(currentArea) != 0){
-//                System.out.println("remove page");
+//                System.out.println("remove Page");
 //                //HERE REMOVE PAGE FROM LIST IN CURRENT SELECTED ITEM
 //                Utils.getMainWindowController().refreshTextEditorPane();
 //            }
 //        });
 
-        Utils.getMainWindowController().addListenersForArea(area);
+ //       Utils.getMainWindowController().addListenersForArea(area);
 
-        pagesList.add(area);
+        pagesList.add(new Page());
     }
 
-    public ArrayList<StyledTextArea<ParStyle, TextStyle>> getPagesList() {
+    public ArrayList<Page> getPagesList() {
         return pagesList;
     }
 
-    public ChangeListener<String> areaOverflowDetector = (observable, oldValue, newValue) -> {
-
-        StyledTextArea<ParStyle, TextStyle> currentArea = Utils.getMainWindowController().getCyrrentFocusTextArea();
-        EasyReaderItem currentItem = Utils.getMainWindowController().getCurrentEasyReaderItem();
-        ArrayList<StyledTextArea<ParStyle, TextStyle>> currentPagesList = currentItem.getPagesList();
-
-        if(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
-            System.out.println("new page");
-
-            //HERE ADD NIE PAGE TO LIST IN CURRENT SELECTED ITEM
-            currentItem.addPage();
-
-            //REFRESH PAGES LIST
-            currentPagesList = currentItem.getPagesList();
-
-            StyledTextArea<ParStyle, TextStyle>  newArea = currentPagesList.get(currentPagesList.size() - 1);
-
-            while(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
-                try {
-                    org.fxmisc.richtext.model.StyledDocument areasdasd = currentArea.getDocument().subDocument(currentArea.getParagraphs().size() - 2);
-                    newArea.append(areasdasd);
-
-                    String asdasd = newArea.getText();
-
-                    System.out.println(currentArea.getParagraph(currentArea.getParagraphs().size() - 2).length());
-                    currentArea.deleteText(currentArea.getParagraphs().size() - 2, 0, currentArea.getParagraphs().size() - 1, currentArea.getParagraph(currentArea.getParagraphs().size() - 1).length());
-                }catch (Exception e){
-                    e.getMessage();
-                }
-            }
-
-            Utils.getMainWindowController().refreshTextEditorPane();
-        }
-
-        if(currentArea.getText().isEmpty() && currentPagesList.indexOf(currentArea) != 0){
-            System.out.println("remove page");
-            //HERE REMOVE PAGE FROM LIST IN CURRENT SELECTED ITEM
-            Utils.getMainWindowController().refreshTextEditorPane();
-        }
-    };
+//    public ChangeListener<String> areaOverflowDetector = (observable, oldValue, newValue) -> {
+//
+//        StyledTextArea<ParStyle, TextStyle> currentArea = Utils.getMainWindowController().getCyrrentFocusTextArea();
+//        EasyReaderItem currentItem = Utils.getMainWindowController().getCurrentEasyReaderItem();
+//        ArrayList<StyledTextArea<ParStyle, TextStyle>> currentPagesList = currentItem.getPagesList();
+//
+//        if(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
+//            System.out.println("new Page");
+//
+//            //HERE ADD NIE PAGE TO LIST IN CURRENT SELECTED ITEM
+//            currentItem.addPage();
+//
+//            //REFRESH PAGES LIST
+//            currentPagesList = currentItem.getPagesList();
+//
+//            StyledTextArea<ParStyle, TextStyle>  newArea = currentPagesList.get(currentPagesList.size() - 1);
+//
+//            while(currentArea.getTotalHeightEstimate() > Paper.A4.getHeight()){
+//                try {
+//                    org.fxmisc.richtext.model.StyledDocument areasdasd = currentArea.getDocument().subDocument(currentArea.getParagraphs().size() - 2);
+//                    newArea.append(areasdasd);
+//
+//                    String asdasd = newArea.getText();
+//
+//                    System.out.println(currentArea.getParagraph(currentArea.getParagraphs().size() - 2).length());
+//                    currentArea.deleteText(currentArea.getParagraphs().size() - 2, 0, currentArea.getParagraphs().size() - 1, currentArea.getParagraph(currentArea.getParagraphs().size() - 1).length());
+//                }catch (Exception e){
+//                    e.getMessage();
+//                }
+//            }
+//
+//            Utils.getMainWindowController().refreshTextEditorPane();
+//        }
+//
+//        if(currentArea.getText().isEmpty() && currentPagesList.indexOf(currentArea) != 0){
+//            System.out.println("remove Page");
+//            //HERE REMOVE PAGE FROM LIST IN CURRENT SELECTED ITEM
+//            Utils.getMainWindowController().refreshTextEditorPane();
+//        }
+//    };
 }

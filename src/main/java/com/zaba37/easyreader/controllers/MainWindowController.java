@@ -68,8 +68,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javafx.scene.text.*;
 
-import org.docx4j.openpackaging.exceptions.Docx4JException;
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.fxmisc.richtext.StyledTextArea;
 import org.fxmisc.richtext.model.Paragraph;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -327,10 +325,10 @@ public class MainWindowController implements Initializable {
                 for (String string : textLines) {
                     System.out.print(string);
 
-                    loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).appendText(string);
+                    loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getPage().appendText(string);
                 }
 
-                String string = loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getText();
+                String string = loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getPage().getText();
 
                 break;
             case "OCRSettingsMenuItem":
@@ -549,9 +547,10 @@ public class MainWindowController implements Initializable {
 
         textEditorScrollGroup = new Group();
         VBox v = new VBox();
+        v.setSpacing(5);
 
         for (int i = 0; i <  loadedItemList.get(currentSelectedItemIndex).getPagesList().size(); i++) {
-             v.getChildren().add(loadedItemList.get(currentSelectedItemIndex).getPagesList().get(i));
+             v.getChildren().add(loadedItemList.get(currentSelectedItemIndex).getPagesList().get(i).getPage());
         }
 
         textEditorScrollGroup.getChildren().add(v);
