@@ -5,7 +5,10 @@ import com.zaba37.easyreader.actions.menuBar.OpenAction;
 import com.zaba37.easyreader.models.EasyReaderItem;
 import com.zaba37.easyreader.ocr.OcrEngine;
 import com.zaba37.easyreader.textEditor.*;
+import io.github.karols.hocr4j.Line;
 import io.github.karols.hocr4j.Page;
+import io.github.karols.hocr4j.Word;
+import io.github.karols.hocr4j.dom.HocrElement;
 import io.github.karols.hocr4j.dom.HocrParser;
 
 import java.io.*;
@@ -19,6 +22,7 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
@@ -59,6 +63,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.xml.transform.OutputKeys;
@@ -66,6 +71,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import javafx.scene.text.*;
 
 import org.fxmisc.richtext.StyledTextArea;
@@ -161,12 +167,12 @@ public class MainWindowController implements Initializable {
         zoomProperty = new SimpleDoubleProperty(200);
         imageView.preserveRatioProperty().set(true);
 
-     //   TextArea textArea = new TextArea();
+        //   TextArea textArea = new TextArea();
 
-    //    textArea.setMinHeight(Paper.A4.getHeight());
-    //    textArea.setMaxHeight(Paper.A4.getHeight());
-    //    textArea.setMinWidth(Paper.A4.getWidth());
-    //    textArea.setMaxWidth(Paper.A4.getWidth());
+        //    textArea.setMinHeight(Paper.A4.getHeight());
+        //    textArea.setMaxHeight(Paper.A4.getHeight());
+        //    textArea.setMinWidth(Paper.A4.getWidth());
+        //    textArea.setMaxWidth(Paper.A4.getWidth());
 
         zoomProperty.addListener(new InvalidationListener() {
             @Override
@@ -219,28 +225,28 @@ public class MainWindowController implements Initializable {
         showImagesListButton.setVisible(true);
         showImagesListButton.toFront();
 
-    //    textArea.setWrapText(true);
+        //    textArea.setWrapText(true);
 
-     //   ArrayList<TextArea> list = new ArrayList();
+        //   ArrayList<TextArea> list = new ArrayList();
 
-     //           textEditorScrollGroup = new Group();
-      //          VBox v = new VBox();
+        //           textEditorScrollGroup = new Group();
+        //          VBox v = new VBox();
 
-     //   for (int i = 0; i < 10; i++) {
-     //       TextArea a = new TextArea();
-     //       a.setMinHeight(Paper.A4.getHeight());
-     //       a.setMaxHeight(Paper.A4.getHeight());
-     //       a.setMinWidth(Paper.A4.getWidth());
-      //      a.setMaxWidth(Paper.A4.getWidth());
-      //      list.add(a);
-       //     v.getChildren().add(a);
+        //   for (int i = 0; i < 10; i++) {
+        //       TextArea a = new TextArea();
+        //       a.setMinHeight(Paper.A4.getHeight());
+        //       a.setMaxHeight(Paper.A4.getHeight());
+        //       a.setMinWidth(Paper.A4.getWidth());
+        //      a.setMaxWidth(Paper.A4.getWidth());
+        //      list.add(a);
+        //     v.getChildren().add(a);
 
-       // }
+        // }
 
-      //  textEditorScrollGroup.getChildren().add(v);
+        //  textEditorScrollGroup.getChildren().add(v);
 
-       // textZoomPane = createZoomPane(textEditorScrollGroup);
-       // textVBox.getChildren().add(textZoomPane);
+        // textZoomPane = createZoomPane(textEditorScrollGroup);
+        // textVBox.getChildren().add(textZoomPane);
 
         //System
 
@@ -275,38 +281,19 @@ public class MainWindowController implements Initializable {
                 break;
             case "SaveAsDocxMenuItem":
                 System.out.print("DOCX");
-//                DirectoryChooser chooser = new DirectoryChooser();
-//                //chooser.setMultiSelectionEnabled(false);
-//
-//                File f =  chooser.showDialog(Utils.getMainStage());
-//
-//                if (f != null) {
-//
-//                    StyledDocument doc = loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getDocument();
-//
-//                    HTMLEditorKit kit = new HTMLEditorKit();
-//
-//                    BufferedOutputStream out;
-//
-//                    try {
-//                        out = new BufferedOutputStream(new FileOutputStream(f.getAbsoluteFile()));
-//
-//                        kit.write(out, ()doc, 0, doc.length());
-//
-//                    } catch (FileNotFoundException e) {
-//
-//                    } catch (IOException e){
-//
-//                    }
+                SaveManager.getInstance().saveToDOCX(loadedItemList.get(0).getPagesList().get(0).getPage().getDocument());
                 break;
             case "SaveAsPdfMenuItem":
                 System.out.print("PDF");
+                SaveManager.getInstance().saveToPDF(loadedItemList.get(0).getPagesList().get(0).getPage().getDocument());
                 break;
             case "ExitMenuItem":
                 System.out.print("EXIT");
                 break;
-        }
+                }
+
     }
+
 
     @FXML
     private void handleOCRActions(ActionEvent event) throws IOException {
@@ -316,10 +303,12 @@ public class MainWindowController implements Initializable {
             case "StartOcrMenuItem":
                 OcrEngine ocrEngine = OcrEngine.getInstance();
                 String result = ocrEngine.getOcrResult(loadedItemList.get(currentSelectedItemIndex).getFile());
+               List<HocrElement> list = HocrParser.createAst(result);
                 List<Page> pages = HocrParser.parse(result);
 
                 System.out.println("");
-                //Page p = pages.get(0).cleanTinyPrint();
+                List<Line> p = pages.get(0).getAllLines();
+                List<Word> a = p.get(0).getWords();
                 List<String> textLines = pages.get(0).getAllLinesAsStrings();
 
                 for (String string : textLines) {
@@ -450,13 +439,13 @@ public class MainWindowController implements Initializable {
         scroller.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable,
-                    Bounds oldValue, Bounds newValue) {
+                                Bounds oldValue, Bounds newValue) {
                 zoomPane.setMinSize(newValue.getWidth(), newValue.getHeight());
             }
         });
 
-       // scroller.setPrefViewportWidth();
-       // scroller.setPrefViewportHeight();
+        // scroller.setPrefViewportWidth();
+        // scroller.setPrefViewportHeight();
         zoomPane.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent event) {
@@ -542,32 +531,32 @@ public class MainWindowController implements Initializable {
         }
     }
 
-    public void refreshTextEditorPane(){
+    public void refreshTextEditorPane() {
         textVBox.getChildren().remove(textZoomPane);
 
         textEditorScrollGroup = new Group();
         VBox v = new VBox();
         v.setSpacing(5);
 
-        for (int i = 0; i <  loadedItemList.get(currentSelectedItemIndex).getPagesList().size(); i++) {
-             v.getChildren().add(loadedItemList.get(currentSelectedItemIndex).getPagesList().get(i).getPage());
+        for (int i = 0; i < loadedItemList.get(currentSelectedItemIndex).getPagesList().size(); i++) {
+            v.getChildren().add(loadedItemList.get(currentSelectedItemIndex).getPagesList().get(i).getPage());
         }
 
         textEditorScrollGroup.getChildren().add(v);
         textZoomPane = createZoomPane(textEditorScrollGroup);
 
-         textVBox.getChildren().add(textZoomPane);
+        textVBox.getChildren().add(textZoomPane);
     }
 
-    public void setCurrentFocusTextArea(StyledTextArea<ParStyle, TextStyle> area){
+    public void setCurrentFocusTextArea(StyledTextArea<ParStyle, TextStyle> area) {
         this.cyrrentFocusTextArea = area;
     }
 
-    public StyledTextArea<ParStyle, TextStyle> getCyrrentFocusTextArea(){
+    public StyledTextArea<ParStyle, TextStyle> getCyrrentFocusTextArea() {
         return this.cyrrentFocusTextArea;
     }
 
-    public EasyReaderItem getCurrentEasyReaderItem(){
+    public EasyReaderItem getCurrentEasyReaderItem() {
         return this.loadedItemList.get(currentSelectedItemIndex);
     }
 
@@ -609,7 +598,7 @@ public class MainWindowController implements Initializable {
 
     private void updateStyleInSelection(Function<StyleSpans<TextStyle>, TextStyle> mixinGetter) {
         IndexRange selection = cyrrentFocusTextArea.getSelection();
-        if(selection.getLength() != 0) {
+        if (selection.getLength() != 0) {
             StyleSpans<TextStyle> styles = cyrrentFocusTextArea.getStyleSpans(selection);
             TextStyle mixin = mixinGetter.apply(styles);
             StyleSpans<TextStyle> newStyles = styles.mapStyles(style -> style.updateWith(mixin));
@@ -630,7 +619,7 @@ public class MainWindowController implements Initializable {
         IndexRange selection = cyrrentFocusTextArea.getSelection();
         int startPar = cyrrentFocusTextArea.offsetToPosition(selection.getStart(), Forward).getMajor();
         int endPar = cyrrentFocusTextArea.offsetToPosition(selection.getEnd(), Backward).getMajor();
-        for(int i = startPar; i <= endPar; ++i) {
+        for (int i = startPar; i <= endPar; ++i) {
             Paragraph<ParStyle, TextStyle> paragraph = cyrrentFocusTextArea.getParagraph(i);
             cyrrentFocusTextArea.setParagraphStyle(i, updater.apply(paragraph.getParagraphStyle()));
         }
@@ -641,32 +630,32 @@ public class MainWindowController implements Initializable {
     }
 
     private void updateFontSize(Integer size) {
-        if(!updatingToolbar.get()) {
+        if (!updatingToolbar.get()) {
             updateStyleInSelection(TextStyle.fontSize(size));
         }
     }
 
     private void updateFontFamily(String family) {
-        if(!updatingToolbar.get()) {
+        if (!updatingToolbar.get()) {
             updateStyleInSelection(TextStyle.fontFamily(family));
         }
     }
 
     private void updateTextColor(Color color) {
-        if(!updatingToolbar.get()) {
+        if (!updatingToolbar.get()) {
             updateStyleInSelection(TextStyle.textColor(color));
         }
     }
 
     private void updateBackgroundColor(Color color) {
-        if(!updatingToolbar.get()) {
+        if (!updatingToolbar.get()) {
             updateStyleInSelection(TextStyle.backgroundColor(color));
         }
     }
 
-    public void addListenersForArea(StyledTextArea<ParStyle, TextStyle> area){
+    public void addListenersForArea(StyledTextArea<ParStyle, TextStyle> area) {
         area.beingUpdatedProperty().addListener((o, old, beingUpdated) -> {
-            if(!beingUpdated) {
+            if (!beingUpdated) {
                 boolean bold, italic, underline, strike;
                 Integer fontSize;
                 String fontFamily;
@@ -674,7 +663,7 @@ public class MainWindowController implements Initializable {
                 Color backgroundColor;
 
                 IndexRange selection = area.getSelection();
-                if(selection.getLength() != 0) {
+                if (selection.getLength() != 0) {
                     StyleSpans<TextStyle> styles = area.getStyleSpans(selection);
                     bold = styles.styleStream().anyMatch(s -> s.bold.orElse(false));
                     italic = styles.styleStream().anyMatch(s -> s.italic.orElse(false));
@@ -715,45 +704,53 @@ public class MainWindowController implements Initializable {
                 Optional<Color> paragraphBackground = paragraphBackgrounds.length == 1 ? paragraphBackgrounds[0] : Optional.empty();
 
                 updatingToolbar.suspendWhile(() -> {
-                    if(bold) {
-                        if(!boldTextButton.getStyleClass().contains("pressed")) {
+                    if (bold) {
+                        if (!boldTextButton.getStyleClass().contains("pressed")) {
                             boldTextButton.getStyleClass().add("pressed");
                         }
                     } else {
                         boldTextButton.getStyleClass().remove("pressed");
                     }
 
-                    if(italic) {
-                        if(!italicTextButton.getStyleClass().contains("pressed")) {
+                    if (italic) {
+                        if (!italicTextButton.getStyleClass().contains("pressed")) {
                             italicTextButton.getStyleClass().add("pressed");
                         }
                     } else {
                         italicTextButton.getStyleClass().remove("pressed");
                     }
 
-                    if(underline) {
-                        if(!underlineTextButton.getStyleClass().contains("pressed")) {
+                    if (underline) {
+                        if (!underlineTextButton.getStyleClass().contains("pressed")) {
                             underlineTextButton.getStyleClass().add("pressed");
                         }
                     } else {
                         underlineTextButton.getStyleClass().remove("pressed");
                     }
 
-                    if(strike) {
-                        if(!strikethroughTextButton.getStyleClass().contains("pressed")) {
+                    if (strike) {
+                        if (!strikethroughTextButton.getStyleClass().contains("pressed")) {
                             strikethroughTextButton.getStyleClass().add("pressed");
                         }
                     } else {
                         strikethroughTextButton.getStyleClass().remove("pressed");
                     }
 
-                    if(alignment.isPresent()) {
+                    if (alignment.isPresent()) {
                         TextAlignment al = alignment.get();
-                        switch(al) {
-                            case LEFT: alginGroup.selectToggle(alginLeftTextButton); break;
-                            case CENTER: alginGroup.selectToggle(alginCenterTextButton); break;
-                            case RIGHT: alginGroup.selectToggle(alginRightTextButton); break;
-                            case JUSTIFY: alginGroup.selectToggle(alginJustifyTextButton); break;
+                        switch (al) {
+                            case LEFT:
+                                alginGroup.selectToggle(alginLeftTextButton);
+                                break;
+                            case CENTER:
+                                alginGroup.selectToggle(alginCenterTextButton);
+                                break;
+                            case RIGHT:
+                                alginGroup.selectToggle(alginRightTextButton);
+                                break;
+                            case JUSTIFY:
+                                alginGroup.selectToggle(alginJustifyTextButton);
+                                break;
                         }
                     } else {
                         alginGroup.selectToggle(null);
@@ -761,19 +758,19 @@ public class MainWindowController implements Initializable {
 
                     //paragraphBackgroundPicker.setValue(paragraphBackground.orElse(null));
 
-                    if(fontSize != -1) {
+                    if (fontSize != -1) {
                         textSizeComboBox.getSelectionModel().select(fontSize);
                     } else {
                         textSizeComboBox.getSelectionModel().clearSelection();
                     }
 
-                    if(fontFamily != null) {
+                    if (fontFamily != null) {
                         textFontComboBox.getSelectionModel().select(fontFamily);
                     } else {
                         textFontComboBox.getSelectionModel().clearSelection();
                     }
 
-                    if(textColor != null) {
+                    if (textColor != null) {
                         textColorColorPicker.setValue(textColor);
                     }
 

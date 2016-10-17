@@ -18,11 +18,12 @@ import net.sourceforge.tess4j.*;
 public class OcrEngine {
 
     private static OcrEngine instance = null;
-    private Tesseract tesseract;
+    private Tesseract1 tesseract;
     private Preferences preferences;
 
     private OcrEngine() {
-        tesseract = new Tesseract();
+        tesseract = new Tesseract1();
+       //tesseract.setOcrEngineMode(ITessAPI.TessOcrEngineMode.OEM_TESSERACT_CUBE_COMBINED);
         tesseract.setHocr(true);
         tesseract.setTessVariable("hocr_font_info", "1");
         tesseract.setTessVariable("pitsync_linear_version", "6");

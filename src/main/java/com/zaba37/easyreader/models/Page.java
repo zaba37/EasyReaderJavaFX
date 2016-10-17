@@ -7,8 +7,10 @@ import javafx.print.Paper;
 import javafx.scene.paint.Color;
 import org.fxmisc.richtext.StyledTextArea;
 import org.fxmisc.richtext.model.EditableStyledDocument;
+import org.fxmisc.richtext.model.Paragraph;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
@@ -17,6 +19,7 @@ import java.util.function.BiConsumer;
 public class Page {
 
     private StyledTextArea<ParStyle, TextStyle> page;
+    private int indexPage;
 
     public Page() {
         page = new StyledTextArea<>(
@@ -46,27 +49,43 @@ public class Page {
 
             try {
                 if (page.getTotalHeightEstimate() > Paper.A4.getHeight()) {
-                    System.out.println("new Page");
 
-                    //HERE ADD NIE PAGE TO LIST IN CURRENT SELECTED ITEM
-                    currentItem.addPage();
+                    if(this.getIndexPage() == currentPagesList.size() - 1){
+                        System.out.println("new Page");
 
-                    //REFRESH PAGES LIST
-                    currentPagesList = currentItem.getPagesList();
+                        //HERE ADD NEW PAGE TO LIST IN CURRENT SELECTED ITEM
+                        currentItem.addPage();
 
-                    Utils.getMainWindowController().refreshTextEditorPane();
+                        //REFRESH PAGES LIST
+                        currentPagesList = currentItem.getPagesList();
 
-                    StyledTextArea<ParStyle, TextStyle> newArea = currentPagesList.get(currentPagesList.size() - 1).getPage();
+                        Utils.getMainWindowController().refreshTextEditorPane();
+                    }
+
+                    StyledTextArea<ParStyle, TextStyle> nextArea = currentPagesList.get(currentPagesList.size() - 1).getPage();
 
                     while (page.getTotalHeightEstimate() > Paper.A4.getHeight()) {
                         try {
-                            String s = page.getParagraph(page.getParagraphs().size() - 2).getText();
-                            newArea.appendText(s);
+                            List<Paragraph<ParStyle, TextStyle>> paragraphsInCurrentPage = page.getDocument().getParagraphs();
+                            List<Paragraph<ParStyle, TextStyle>> paragraphsInNextPage = nextArea.getDocument().getParagraphs();
 
-                            String asdasd = newArea.getText();
+                            if(paragraphsInCurrentPage.get(paragraphsInCurrentPage.size() - 1).length() != 0){
 
-                            System.out.println(page.getParagraph(page.getParagraphs().size() - 2).length());
-                            page.deleteText(page.getParagraphs().size() - 2, 0, page.getParagraphs().size() - 1, page.getParagraph(page.getParagraphs().size() - 1).length());
+
+
+                                String s = page.getParagraph(page.getParagraphs().size() - 2).getText();
+                                nextArea.appendText(s);
+
+                                String asdasd = nextArea.getText();
+
+                                System.out.println(page.getParagraph(page.getParagraphs().size() - 2).length());
+                                page.deleteText(page.getParagraphs().size() - 2, 0, page.getParagraphs().size() - 1, page.getParagraph(page.getParagraphs().size() - 1).length());
+                            }else{
+                                int a = paragraphsInCurrentPage.get(paragraphsInCurrentPage.size() - 1).length();
+                                page.deleteText(page.getText().length() - 1, page.getText().length());
+                            }
+
+
                         } catch (Exception e) {
                             //e.printStackTrace();
                         }
@@ -96,6 +115,14 @@ public class Page {
         });
 
         Utils.getMainWindowController().addListenersForArea(page);
+    }
+
+    public void setIndexPage(int index){
+        this.indexPage = index;
+    }
+
+    public int getIndexPage(){
+        return this.indexPage;
     }
 
     public StyledTextArea<ParStyle, TextStyle> getPage() {
