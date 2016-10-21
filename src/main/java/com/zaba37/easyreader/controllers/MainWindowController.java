@@ -2,6 +2,7 @@ package com.zaba37.easyreader.controllers;
 
 import com.zaba37.easyreader.Utils;
 import com.zaba37.easyreader.actions.menuBar.OpenAction;
+import com.zaba37.easyreader.imageEditor.RectangleSelection;
 import com.zaba37.easyreader.models.EasyReaderItem;
 import com.zaba37.easyreader.ocr.OcrEngine;
 import com.zaba37.easyreader.textEditor.*;
@@ -152,6 +153,9 @@ public class MainWindowController implements Initializable {
     @FXML
     private ToggleGroup alginGroup;
 
+    @FXML
+    private Group imageGroup;
+
     private DoubleProperty zoomProperty;
     private Group textEditorScrollGroup;
     private Parent textZoomPane;
@@ -161,18 +165,12 @@ public class MainWindowController implements Initializable {
     private int currentSelectedItemIndex;
     private final SuspendableNo updatingToolbar = new SuspendableNo();
     private StyledTextArea<ParStyle, TextStyle> cyrrentFocusTextArea;
+    private RectangleSelection rectangleSelection;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        zoomProperty = new SimpleDoubleProperty(200);
+        zoomProperty = new SimpleDoubleProperty(100);
         imageView.preserveRatioProperty().set(true);
-
-        //   TextArea textArea = new TextArea();
-
-        //    textArea.setMinHeight(Paper.A4.getHeight());
-        //    textArea.setMaxHeight(Paper.A4.getHeight());
-        //    textArea.setMinWidth(Paper.A4.getWidth());
-        //    textArea.setMaxWidth(Paper.A4.getWidth());
 
         zoomProperty.addListener(new InvalidationListener() {
             @Override
@@ -190,6 +188,17 @@ public class MainWindowController implements Initializable {
                 } else if (event.getDeltaY() < 0) {
                     zoomProperty.set(zoomProperty.get() / 1.1);
                 }
+
+                if(rectangleSelection != null){
+                    System.out.println("Image fit height: " + imageView.getFitHeight());
+                    System.out.println("Image fit width: " + imageView.getFitWidth());
+                    System.out.println("Image fit height prop: " + imageView.fitHeightProperty());
+                    System.out.println("Image fit width prop: " + imageView.fitWidthProperty());
+                    System.out.println("Image width: " + (int)imageView.getBoundsInParent().getWidth());
+                    System.out.println("Image height: " + (int)imageView.getBoundsInParent().getHeight());
+
+                    rectangleSelection.setZoomValue(zoomProperty.getValue());
+                }
             }
         });
 
@@ -197,7 +206,11 @@ public class MainWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 imageView.setFitWidth(newSceneWidth.doubleValue());
-                zoomProperty.set(200);
+                zoomProperty.set(100);
+
+                if(rectangleSelection != null){
+                    rectangleSelection.setZoomValue(zoomProperty.getValue());
+                }
             }
         });
 
@@ -205,7 +218,11 @@ public class MainWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
                 imageView.setFitHeight(newSceneHeight.doubleValue());
-                zoomProperty.set(200);
+                zoomProperty.set(100);
+
+                if(rectangleSelection != null){
+                    rectangleSelection.setZoomValue(zoomProperty.getValue());
+                }
             }
         });
 
@@ -289,6 +306,9 @@ public class MainWindowController implements Initializable {
                 break;
             case "ExitMenuItem":
                 System.out.print("EXIT");
+                if(rectangleSelection != null) {
+                    rectangleSelection.crop();
+                }
                 break;
                 }
 
@@ -353,6 +373,9 @@ public class MainWindowController implements Initializable {
             case "zoomIncreasingButton":
                 break;
             case "zoomDecreasingButton":
+                break;
+            case "cropImageButton":
+                rectangleSelection = new RectangleSelection(imageGroup);
                 break;
         }
     }

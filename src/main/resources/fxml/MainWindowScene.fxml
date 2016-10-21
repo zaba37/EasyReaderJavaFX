@@ -114,9 +114,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-            <!--                     </content>
-                        </ScrollPane>-->
-                        <ScrollPane fx:id="imageScrollPane" fitToHeight="true" minHeight="${imagePane.viewportBounds.height}" minWidth="${imagePane.viewportBounds.width}" prefHeight="249.0" prefWidth="287.0" GridPane.rowIndex="1">
+                        <ScrollPane fx:id="imageScrollPane" fitToHeight="true" prefHeight="249.0" prefWidth="287.0" GridPane.rowIndex="1">
                            <content>
                                 <VBox alignment="CENTER" minWidth="${imageScrollPane.viewportBounds.width}">
                                    <children>
@@ -124,7 +122,11 @@
                                              <children>
                                                     <VBox fx:id="menuView">
                                                        <children>
-                                                            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                                <Group fx:id="imageGroup">
+                                                   <children>
+                                                                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                                   </children>
+                                                </Group>
                                                        </children>
                                                     </VBox>
                                              </children>
@@ -153,6 +155,11 @@
                               <Button id="zoomDecreasingButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleImageEditorActions" prefHeight="30.0" prefWidth="30.0" style="-fx-graphic: url('/image/imageEditorResource/zoom_decreasing.png');">
                                  <HBox.margin>
                                     <Insets bottom="7.0" left="2.0" right="2.0" top="6.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button id="cropImageButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleImageEditorActions" prefHeight="30.0" prefWidth="30.0" style="-fx-graphic: url('/image/imageEditorResource/crop.png');">
+                                 <HBox.margin>
+                                    <Insets bottom="7.0" right="2.0" top="6.0" />
                                  </HBox.margin>
                               </Button>
                            </children>

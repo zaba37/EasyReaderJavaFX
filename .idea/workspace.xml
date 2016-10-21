@@ -13,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/EasyReader$Easy_Reader.coverage" NAME="Easy Reader Coverage Results" MODIFIED="1475700450913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/EasyReader$Easy_Reader.coverage" NAME="Easy Reader Coverage Results" MODIFIED="1476824561125" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -27,14 +27,23 @@
       <file leaf-file-name="MainWindowController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/controllers/MainWindowController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4056">
-              <caret line="314" column="0" selection-start-line="314" selection-start-column="0" selection-end-line="314" selection-end-column="0" />
+            <state relative-caret-position="297">
+              <caret line="309" column="46" selection-start-line="309" selection-start-column="46" selection-end-line="309" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#21145#21146#0" expanded="true" />
-                <element signature="e#21193#21194#0" expanded="true" />
-                <element signature="e#21269#21270#0" expanded="true" />
-                <element signature="e#21373#21374#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SimpleDoubleProperty.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_65/javafx-src.zip!/javafx/beans/property/SimpleDoubleProperty.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="35" column="33" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="33" />
+              <folding>
+                <element signature="e#1226#1227#0" expanded="true" />
+                <element signature="e#1288#1289#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,43 +52,74 @@
       <file leaf-file-name="EasyReaderItem.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/EasyReaderItem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="90" column="49" selection-start-line="90" selection-start-column="49" selection-end-line="90" selection-end-column="49" />
+            <state relative-caret-position="238">
+              <caret line="48" column="29" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Page.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java">
+      <file leaf-file-name="RectangleSelection.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/imageEditor/RectangleSelection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+            <state relative-caret-position="-121">
+              <caret line="87" column="27" selection-start-line="87" selection-start-column="27" selection-end-line="87" selection-end-column="27" />
               <folding>
-                <element signature="e#4945#4946#0" expanded="true" />
-                <element signature="e#4983#4984#0" expanded="true" />
-                <element signature="e#5015#5016#0" expanded="true" />
-                <element signature="e#5052#5053#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#1034#1035#0" expanded="true" />
+                <element signature="e#1081#1082#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditActions.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/model/EditActions.java">
+      <file leaf-file-name="ImageBackgroundLoader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/actions/menuBar/ImageBackgroundLoader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="104" column="89" selection-start-line="104" selection-start-column="89" selection-end-line="104" selection-end-column="89" />
+            <state relative-caret-position="602">
+              <caret line="162" column="100" selection-start-line="162" selection-start-column="11" selection-end-line="162" selection-end-column="100" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="List.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_65/src.zip!/java/util/List.java">
+      <file leaf-file-name="Page.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="599" column="6" selection-start-line="599" selection-start-column="6" selection-end-line="599" selection-end-column="6" />
+            <state relative-caret-position="714">
+              <caret line="56" column="60" selection-start-line="56" selection-start-column="60" selection-end-line="56" selection-end-column="60" />
+              <folding>
+                <element signature="e#6256#6257#0" expanded="true" />
+                <element signature="e#6294#6295#0" expanded="true" />
+                <element signature="e#6327#6328#0" expanded="true" />
+                <element signature="e#6364#6365#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rotate_left.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/image/imageEditorResource/rotate_left.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="crop.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/image/imageEditorResource/crop.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainWindowScene.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/MainWindowScene.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="349">
+              <caret line="124" column="72" selection-start-line="124" selection-start-column="62" selection-end-line="124" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -88,51 +128,87 @@
       <file leaf-file-name="StyledTextArea.java" pinned="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/StyledTextArea.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="371" column="36" selection-start-line="371" selection-start-column="36" selection-end-line="371" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StyledDocument.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/model/StyledDocument.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1105">
-              <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NavigationActions.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/model/NavigationActions.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SaveManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/textEditor/SaveManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="701">
-              <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+            <state relative-caret-position="5899">
+              <caret line="426" column="0" selection-start-line="426" selection-start-column="0" selection-end-line="426" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#15305#15306#0" expanded="false" />
+                <element signature="e#15339#15340#0" expanded="false" />
+                <element signature="e#22183#22184#0" expanded="false" />
+                <element signature="e#22211#22212#0" expanded="false" />
+                <element signature="e#32645#32646#0" expanded="false" />
+                <element signature="e#32691#32692#0" expanded="false" />
+                <element signature="e#35621#35622#0" expanded="false" />
+                <element signature="e#35673#35674#0" expanded="false" />
+                <element signature="e#35742#35743#0" expanded="false" />
+                <element signature="e#35790#35791#0" expanded="false" />
+                <element signature="e#35848#35849#0" expanded="false" />
+                <element signature="e#35895#35896#0" expanded="false" />
+                <element signature="e#35950#35951#0" expanded="false" />
+                <element signature="e#35998#35999#0" expanded="false" />
+                <element signature="e#36080#36081#0" expanded="false" />
+                <element signature="e#36132#36133#0" expanded="false" />
+                <element signature="e#36214#36215#0" expanded="false" />
+                <element signature="e#36270#36271#0" expanded="false" />
+                <element signature="e#36407#36408#0" expanded="false" />
+                <element signature="e#36468#36469#0" expanded="false" />
+                <element signature="e#36752#36753#0" expanded="false" />
+                <element signature="e#36802#36803#0" expanded="false" />
+                <element signature="e#37406#37407#0" expanded="false" />
+                <element signature="e#37463#37464#0" expanded="false" />
+                <element signature="e#37903#37904#0" expanded="false" />
+                <element signature="e#37965#37966#0" expanded="false" />
+                <element signature="e#38097#38098#0" expanded="false" />
+                <element signature="e#38149#38150#0" expanded="false" />
+                <element signature="e#38281#38282#0" expanded="false" />
+                <element signature="e#38351#38352#0" expanded="false" />
+                <element signature="e#38688#38689#0" expanded="false" />
+                <element signature="e#38749#38750#0" expanded="false" />
+                <element signature="e#38976#38977#0" expanded="false" />
+                <element signature="e#39044#39045#0" expanded="false" />
+                <element signature="e#39570#39571#0" expanded="false" />
+                <element signature="e#39623#39624#0" expanded="false" />
+                <element signature="e#40337#40338#0" expanded="false" />
+                <element signature="e#40384#40385#0" expanded="false" />
+                <element signature="e#40465#40466#0" expanded="false" />
+                <element signature="e#40528#40529#0" expanded="false" />
+                <element signature="e#41333#41334#0" expanded="false" />
+                <element signature="e#41368#41369#0" expanded="false" />
+                <element signature="e#42654#42655#0" expanded="false" />
+                <element signature="e#42701#42702#0" expanded="false" />
+                <element signature="e#42812#42813#0" expanded="false" />
+                <element signature="e#42860#42861#0" expanded="false" />
+                <element signature="e#43017#43018#0" expanded="false" />
+                <element signature="e#43075#43076#0" expanded="false" />
+                <element signature="e#43484#43485#0" expanded="false" />
+                <element signature="e#43537#43538#0" expanded="false" />
+                <element signature="e#44376#44377#0" expanded="false" />
+                <element signature="e#44418#44419#0" expanded="false" />
+                <element signature="e#44548#44549#0" expanded="false" />
+                <element signature="e#44591#44592#0" expanded="false" />
+                <element signature="e#44765#44766#0" expanded="false" />
+                <element signature="e#44818#44819#0" expanded="false" />
+                <element signature="e#44957#44958#0" expanded="false" />
+                <element signature="e#45009#45010#0" expanded="false" />
+                <element signature="e#45087#45088#0" expanded="false" />
+                <element signature="e#45138#45139#0" expanded="false" />
+                <element signature="e#45364#45365#0" expanded="false" />
+                <element signature="e#45420#45421#0" expanded="false" />
+                <element signature="e#45658#45659#0" expanded="false" />
+                <element signature="e#45698#45699#0" expanded="false" />
+                <element signature="e#49963#49964#0" expanded="false" />
+                <element signature="e#50005#50006#0" expanded="false" />
+                <element signature="e#50077#50078#0" expanded="false" />
+                <element signature="e#50128#50129#0" expanded="false" />
+                <element signature="e#50885#50886#0" expanded="false" />
+                <element signature="e#50944#50945#0" expanded="false" />
+                <element signature="e#51393#51394#0" expanded="false" />
+                <element signature="e#51446#51447#0" expanded="false" />
+                <element signature="e#53942#53943#0" expanded="false" />
+                <element signature="e#54005#54006#0" expanded="false" />
+                <element signature="e#54059#54060#0" expanded="false" />
+                <element signature="e#54126#54127#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OcrEngine.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/ocr/OcrEngine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="51" column="27" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="27" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -145,8 +221,8 @@
         <option value="JavaFXApplication" />
         <option value="XSLT Stylesheet" />
         <option value="package-info" />
-        <option value="Class" />
         <option value="Singleton" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -164,16 +240,17 @@
         <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/MainApp.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/textEditor/TextStyle.java" />
         <option value="$MAVEN_REPOSITORY$/io/github/karols/hocr4j/0.1.2/hocr4j-0.1.2.jar!/io/github/karols/hocr4j/Page.class" />
-        <option value="$PROJECT_DIR$/src/main/resources/fxml/MainWindowScene.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/page.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/Utils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/EasyReaderItem.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/textEditor/ParStyle.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/textEditor/SaveManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/ocr/OcrEngine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/controllers/MainWindowController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/fxml/MainWindowScene.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/EasyReaderItem.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/controllers/MainWindowController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/imageEditor/RectangleSelection.java" />
       </list>
     </option>
   </component>
@@ -197,8 +274,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -226,8 +303,8 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -283,6 +360,62 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyReader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyReaderJavaFX" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="image" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyReader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyReaderJavaFX" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="image" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imageEditorResource" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -454,6 +587,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="imageEditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyReader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyReaderJavaFX" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="easyreader" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -496,6 +659,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zaba3\Desktop\EasyReaderJavaFX\src\main\resources\image\imageEditorResource" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Easy Reader">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -784,7 +952,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -795,15 +963,15 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.49590835" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22974414" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33509833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5438787" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39111593" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -852,43 +1020,61 @@
           <properties />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/controllers/MainWindowController.java</url>
-          <line>311</line>
-          <properties />
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java</url>
-          <line>112</line>
+          <line>125</line>
           <properties />
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java</url>
+          <line>162</line>
+          <properties />
+          <option name="timeStamp" value="78" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java</url>
+          <line>115</line>
+          <properties />
+          <option name="timeStamp" value="79" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java</url>
+          <line>124</line>
+          <properties />
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java</url>
+          <line>60</line>
+          <properties />
+          <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/controllers/MainWindowController.java</url>
-          <line>306</line>
+          <line>196</line>
           <properties />
-          <option name="timeStamp" value="55" />
+          <option name="timeStamp" value="113" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java</url>
-          <line>84</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/imageEditor/RectangleSelection.java</url>
+          <line>87</line>
           <properties />
-          <option name="timeStamp" value="57" />
+          <option name="timeStamp" value="116" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java</url>
-          <line>81</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/imageEditor/RectangleSelection.java</url>
+          <line>90</line>
           <properties />
-          <option name="timeStamp" value="58" />
+          <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java</url>
-          <line>61</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/imageEditor/RectangleSelection.java</url>
+          <line>88</line>
           <properties />
-          <option name="timeStamp" value="60" />
+          <option name="timeStamp" value="118" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="61" />
+      <option name="time" value="119" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -901,16 +1087,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/aaa.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/gfgg.xsl" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/actions/menuBar/AsyncTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="23" column="60" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/actions/menuBar/package-info.java" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/asdasd.fxml" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/image/textEditorResource/Underline-104.png">
       <provider selected="true" editor-type-id="images">
@@ -959,17 +1135,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/MainWindowScene.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3043">
-          <caret line="179" column="148" selection-start-line="179" selection-start-column="148" selection-end-line="179" selection-end-column="148" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1598">
@@ -982,7 +1147,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1358">
           <caret line="52" column="51" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -990,7 +1154,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
           <caret line="105" column="17" selection-start-line="105" selection-start-column="17" selection-end-line="105" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -998,9 +1161,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#772#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1008,7 +1168,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
           <caret line="132" column="13" selection-start-line="132" selection-start-column="13" selection-end-line="132" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1016,10 +1175,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
           <caret line="488" column="11" selection-start-line="488" selection-start-column="11" selection-end-line="488" selection-end-column="11" />
-          <folding>
-            <element signature="e#11984#11985#0" expanded="false" />
-            <element signature="e#12024#12025#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1047,7 +1202,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="816">
           <caret line="75" column="16" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1055,7 +1209,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
           <caret line="350" column="16" selection-start-line="350" selection-start-column="16" selection-end-line="350" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1063,10 +1216,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
           <caret line="48" column="29" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="29" />
-          <folding>
-            <element signature="e#1464#1465#0" expanded="false" />
-            <element signature="e#1525#1526#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1074,7 +1223,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1082,14 +1230,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="66" column="21" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/actions/menuBar/ImageBackgroundLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1866">
-          <caret line="162" column="100" selection-start-line="162" selection-start-column="11" selection-end-line="162" selection-end-column="100" />
           <folding />
         </state>
       </provider>
@@ -1102,21 +1242,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/actions/menuBar/OpenAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="64" column="69" selection-start-line="64" selection-start-column="69" selection-end-line="64" selection-end-column="69" />
-          <folding>
-            <element signature="e#2207#2237#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/net/sourceforge/tess4j/tess4j/3.2.1/tess4j-3.2.1-sources.jar!/net/sourceforge/tess4j/ITesseract.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
           <caret line="215" column="58" selection-start-line="215" selection-start-column="58" selection-end-line="215" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1124,10 +1253,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
           <caret line="68" column="44" selection-start-line="68" selection-start-column="44" selection-end-line="68" selection-end-column="44" />
-          <folding>
-            <element signature="e#4281#4282#0" expanded="false" />
-            <element signature="e#4331#4332#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1135,7 +1260,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="41" column="45" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1143,7 +1267,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="197">
           <caret line="455" column="26" selection-start-line="455" selection-start-column="26" selection-end-line="455" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1151,10 +1274,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="214">
           <caret line="165" column="17" selection-start-line="165" selection-start-column="17" selection-end-line="165" selection-end-column="17" />
-          <folding>
-            <element signature="e#5711#5712#0" expanded="false" />
-            <element signature="e#5749#5750#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1162,10 +1281,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="205">
           <caret line="137" column="17" selection-start-line="137" selection-start-column="17" selection-end-line="137" selection-end-column="17" />
-          <folding>
-            <element signature="e#4347#4348#0" expanded="false" />
-            <element signature="e#4391#4392#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1173,7 +1288,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1181,12 +1295,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding>
-            <element signature="e#2938#2939#0" expanded="true" />
-            <element signature="e#2979#2980#0" expanded="true" />
-            <element signature="e#3596#3597#0" expanded="true" />
-            <element signature="e#3641#3642#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1194,17 +1302,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2516">
           <caret line="175" column="5" selection-start-line="175" selection-start-column="5" selection-end-line="175" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/textEditor/SaveManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="701">
+        <state relative-caret-position="1258">
           <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1212,22 +1317,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
           <caret line="51" column="27" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="27" />
-          <folding />
+          <folding>
+            <element signature="e#0#2457#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1344#1345#0" expanded="false" />
+            <element signature="e#1387#1388#0" expanded="false" />
+            <element signature="e#1438#1439#0" expanded="false" />
+            <element signature="e#1488#1489#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/model/NavigationActions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
+        <state relative-caret-position="238">
           <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/StyledTextArea.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="371" column="36" selection-start-line="371" selection-start-column="36" selection-end-line="371" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -1236,65 +1340,242 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/model/StyledDocument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1105">
-          <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_65/src.zip!/java/util/List.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
+        <state relative-caret-position="9792">
           <caret line="599" column="6" selection-start-line="599" selection-start-column="6" selection-end-line="599" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/EasyReaderItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="90" column="49" selection-start-line="90" selection-start-column="49" selection-end-line="90" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/model/EditActions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
+        <state relative-caret-position="1564">
           <caret line="104" column="89" selection-start-line="104" selection-start-column="89" selection-end-line="104" selection-end-column="89" />
-          <folding />
+          <folding>
+            <element signature="e#328#329#0" expanded="false" />
+            <element signature="e#373#374#0" expanded="false" />
+            <element signature="e#529#530#0" expanded="false" />
+            <element signature="e#574#575#0" expanded="false" />
+            <element signature="e#797#798#0" expanded="false" />
+            <element signature="e#844#845#0" expanded="false" />
+            <element signature="e#1655#1656#0" expanded="false" />
+            <element signature="e#1702#1703#0" expanded="false" />
+            <element signature="e#2506#2507#0" expanded="false" />
+            <element signature="e#2566#2567#0" expanded="false" />
+            <element signature="e#2871#2872#0" expanded="false" />
+            <element signature="e#2914#2915#0" expanded="false" />
+            <element signature="e#4417#4418#0" expanded="false" />
+            <element signature="e#4464#4465#0" expanded="false" />
+            <element signature="e#4588#4589#0" expanded="false" />
+            <element signature="e#4645#4646#0" expanded="false" />
+            <element signature="e#4793#4794#0" expanded="false" />
+            <element signature="e#4845#4846#0" expanded="false" />
+            <element signature="e#5206#5207#0" expanded="false" />
+            <element signature="e#5262#5263#0" expanded="false" />
+            <element signature="e#5636#5637#0" expanded="false" />
+            <element signature="e#5688#5689#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/controllers/MainWindowController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/actions/menuBar/OpenAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4056">
-          <caret line="314" column="0" selection-start-line="314" selection-start-column="0" selection-end-line="314" selection-end-column="0" />
+        <state relative-caret-position="561">
+          <caret line="54" column="10" selection-start-line="54" selection-start-column="10" selection-end-line="54" selection-end-column="10" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#21145#21146#0" expanded="true" />
-            <element signature="e#21193#21194#0" expanded="true" />
-            <element signature="e#21269#21270#0" expanded="true" />
-            <element signature="e#21373#21374#0" expanded="true" />
+            <element signature="e#0#2613#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/model/StyledDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#544#545#0" expanded="false" />
+            <element signature="e#608#609#0" expanded="false" />
+            <element signature="e#658#659#0" expanded="false" />
+            <element signature="e#714#715#0" expanded="false" />
+            <element signature="e#1985#1986#0" expanded="false" />
+            <element signature="e#2058#2059#0" expanded="false" />
+            <element signature="e#4248#4249#0" expanded="false" />
+            <element signature="e#4317#4318#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/fxmisc/richtext/richtextfx/0.7-M2/richtextfx-0.7-M2-sources.jar!/org/fxmisc/richtext/StyledTextArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5899">
+          <caret line="426" column="0" selection-start-line="426" selection-start-column="0" selection-end-line="426" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#15305#15306#0" expanded="false" />
+            <element signature="e#15339#15340#0" expanded="false" />
+            <element signature="e#22183#22184#0" expanded="false" />
+            <element signature="e#22211#22212#0" expanded="false" />
+            <element signature="e#32645#32646#0" expanded="false" />
+            <element signature="e#32691#32692#0" expanded="false" />
+            <element signature="e#35621#35622#0" expanded="false" />
+            <element signature="e#35673#35674#0" expanded="false" />
+            <element signature="e#35742#35743#0" expanded="false" />
+            <element signature="e#35790#35791#0" expanded="false" />
+            <element signature="e#35848#35849#0" expanded="false" />
+            <element signature="e#35895#35896#0" expanded="false" />
+            <element signature="e#35950#35951#0" expanded="false" />
+            <element signature="e#35998#35999#0" expanded="false" />
+            <element signature="e#36080#36081#0" expanded="false" />
+            <element signature="e#36132#36133#0" expanded="false" />
+            <element signature="e#36214#36215#0" expanded="false" />
+            <element signature="e#36270#36271#0" expanded="false" />
+            <element signature="e#36407#36408#0" expanded="false" />
+            <element signature="e#36468#36469#0" expanded="false" />
+            <element signature="e#36752#36753#0" expanded="false" />
+            <element signature="e#36802#36803#0" expanded="false" />
+            <element signature="e#37406#37407#0" expanded="false" />
+            <element signature="e#37463#37464#0" expanded="false" />
+            <element signature="e#37903#37904#0" expanded="false" />
+            <element signature="e#37965#37966#0" expanded="false" />
+            <element signature="e#38097#38098#0" expanded="false" />
+            <element signature="e#38149#38150#0" expanded="false" />
+            <element signature="e#38281#38282#0" expanded="false" />
+            <element signature="e#38351#38352#0" expanded="false" />
+            <element signature="e#38688#38689#0" expanded="false" />
+            <element signature="e#38749#38750#0" expanded="false" />
+            <element signature="e#38976#38977#0" expanded="false" />
+            <element signature="e#39044#39045#0" expanded="false" />
+            <element signature="e#39570#39571#0" expanded="false" />
+            <element signature="e#39623#39624#0" expanded="false" />
+            <element signature="e#40337#40338#0" expanded="false" />
+            <element signature="e#40384#40385#0" expanded="false" />
+            <element signature="e#40465#40466#0" expanded="false" />
+            <element signature="e#40528#40529#0" expanded="false" />
+            <element signature="e#41333#41334#0" expanded="false" />
+            <element signature="e#41368#41369#0" expanded="false" />
+            <element signature="e#42654#42655#0" expanded="false" />
+            <element signature="e#42701#42702#0" expanded="false" />
+            <element signature="e#42812#42813#0" expanded="false" />
+            <element signature="e#42860#42861#0" expanded="false" />
+            <element signature="e#43017#43018#0" expanded="false" />
+            <element signature="e#43075#43076#0" expanded="false" />
+            <element signature="e#43484#43485#0" expanded="false" />
+            <element signature="e#43537#43538#0" expanded="false" />
+            <element signature="e#44376#44377#0" expanded="false" />
+            <element signature="e#44418#44419#0" expanded="false" />
+            <element signature="e#44548#44549#0" expanded="false" />
+            <element signature="e#44591#44592#0" expanded="false" />
+            <element signature="e#44765#44766#0" expanded="false" />
+            <element signature="e#44818#44819#0" expanded="false" />
+            <element signature="e#44957#44958#0" expanded="false" />
+            <element signature="e#45009#45010#0" expanded="false" />
+            <element signature="e#45087#45088#0" expanded="false" />
+            <element signature="e#45138#45139#0" expanded="false" />
+            <element signature="e#45364#45365#0" expanded="false" />
+            <element signature="e#45420#45421#0" expanded="false" />
+            <element signature="e#45658#45659#0" expanded="false" />
+            <element signature="e#45698#45699#0" expanded="false" />
+            <element signature="e#49963#49964#0" expanded="false" />
+            <element signature="e#50005#50006#0" expanded="false" />
+            <element signature="e#50077#50078#0" expanded="false" />
+            <element signature="e#50128#50129#0" expanded="false" />
+            <element signature="e#50885#50886#0" expanded="false" />
+            <element signature="e#50944#50945#0" expanded="false" />
+            <element signature="e#51393#51394#0" expanded="false" />
+            <element signature="e#51446#51447#0" expanded="false" />
+            <element signature="e#53942#53943#0" expanded="false" />
+            <element signature="e#54005#54006#0" expanded="false" />
+            <element signature="e#54059#54060#0" expanded="false" />
+            <element signature="e#54126#54127#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/Page.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+        <state relative-caret-position="714">
+          <caret line="56" column="60" selection-start-line="56" selection-start-column="60" selection-end-line="56" selection-end-column="60" />
           <folding>
-            <element signature="e#4945#4946#0" expanded="true" />
-            <element signature="e#4983#4984#0" expanded="true" />
-            <element signature="e#5015#5016#0" expanded="true" />
-            <element signature="e#5052#5053#0" expanded="true" />
+            <element signature="e#6256#6257#0" expanded="true" />
+            <element signature="e#6294#6295#0" expanded="true" />
+            <element signature="e#6327#6328#0" expanded="true" />
+            <element signature="e#6364#6365#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/image/imageEditorResource/rotate_left.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/image/imageEditorResource/crop.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_65/javafx-src.zip!/javafx/beans/property/SimpleDoubleProperty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="35" column="33" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="33" />
+          <folding>
+            <element signature="e#1226#1227#0" expanded="true" />
+            <element signature="e#1288#1289#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/MainWindowScene.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="124" column="72" selection-start-line="124" selection-start-column="62" selection-end-line="124" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/models/EasyReaderItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="48" column="29" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/actions/menuBar/ImageBackgroundLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="162" column="100" selection-start-line="162" selection-start-column="11" selection-end-line="162" selection-end-column="100" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/controllers/MainWindowController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="309" column="46" selection-start-line="309" selection-start-column="46" selection-end-line="309" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/zaba37/easyreader/imageEditor/RectangleSelection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-121">
+          <caret line="87" column="27" selection-start-line="87" selection-start-column="27" selection-end-line="87" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1034#1035#0" expanded="true" />
+            <element signature="e#1081#1082#0" expanded="true" />
           </folding>
         </state>
       </provider>
