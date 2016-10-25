@@ -7,7 +7,9 @@ package com.zaba37.easyreader.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,43 +23,53 @@ import javafx.scene.layout.VBox;
  *
  * @author Krystian
  */
+
 public class ImageListCellController {
+
+    public enum ListType {
+        MAIN_ITEM_LIST,
+        OCR_PAGE_LIST
+    }
 
     @FXML
     private ImageView imageCell;
-    
-    @FXML 
+
+    @FXML
     private Label labelCell;
-    
-    @FXML 
+
+    @FXML
     private VBox vBox;
-    
-    public ImageListCellController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ImageListCellItem.fxml"));
-        fxmlLoader.setController(this);
-        
-        try
-        {
-            fxmlLoader.load();
+
+    public ImageListCellController(ListType type) {
+        FXMLLoader fxmlLoader = null;
+
+        if (ListType.MAIN_ITEM_LIST == type) {
+            fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ImageListCellItem.fxml"));
+        } else if (ListType.OCR_PAGE_LIST == type) {
+            fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PageOCRChooserCellItem.fxml"));
         }
-        catch (IOException e)
-        {
+
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        
+
         imageCell.preserveRatioProperty().set(true);
     }
-    
-    public VBox getVBox(){
+
+    public VBox getVBox() {
         return vBox;
     }
-    
-    public void setImage(Image image){
+
+    public void setImage(Image image) {
         imageCell.setImage(image);
     }
-    
-    public void setImageName(String name){
+
+    public void setImageName(String name) {
         labelCell.setText(name);
     }
-    
+
 }

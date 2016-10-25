@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="vBox" prefHeight="100.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane maxHeight="100.0" maxWidth="300.0" minHeight="100.0" minWidth="300.0" prefHeight="100.0" prefWidth="300.0">
+         <children>
+            <HBox layoutX="100.0" layoutY="50.0" prefHeight="100.0" prefWidth="300.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <VBox alignment="CENTER" maxHeight="80.0" maxWidth="130.0" minHeight="80.0" minWidth="130.0" prefHeight="80.0" prefWidth="130.0">
+                     <children>
+                        <ImageView fx:id="imageCell" fitHeight="70.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <Separator orientation="VERTICAL" prefHeight="100.0" />
+                  <Label fx:id="labelCell" alignment="CENTER" contentDisplay="CENTER" maxHeight="70.0" maxWidth="130.0" minHeight="70.0" minWidth="130.0" prefHeight="70.0" prefWidth="130.0" text="asdasdasd a" textAlignment="CENTER" wrapText="true">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

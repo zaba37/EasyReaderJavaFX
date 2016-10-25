@@ -65,12 +65,12 @@ public class OpenAction {
             LoadingWindowSceneController controllerLoad = fxmlLoader.<LoadingWindowSceneController>getController();
             controllerLoad.startLoading(filesList);
             Scene scene = new Scene(root);
-            Stage stahe = new Stage();
-            stahe.initModality(Modality.WINDOW_MODAL);
-            stahe.initOwner(Utils.getMainWindow());
-            stahe.setScene(scene);
-            stahe.setResizable(false);
-            stahe.show();
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(Utils.getMainWindow());
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
         }
     }
 }

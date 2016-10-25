@@ -188,17 +188,6 @@ public class MainWindowController implements Initializable {
                 } else if (event.getDeltaY() < 0) {
                     zoomProperty.set(zoomProperty.get() / 1.1);
                 }
-
-                if(rectangleSelection != null){
-                    System.out.println("Image fit height: " + imageView.getFitHeight());
-                    System.out.println("Image fit width: " + imageView.getFitWidth());
-                    System.out.println("Image fit height prop: " + imageView.fitHeightProperty());
-                    System.out.println("Image fit width prop: " + imageView.fitWidthProperty());
-                    System.out.println("Image width: " + (int)imageView.getBoundsInParent().getWidth());
-                    System.out.println("Image height: " + (int)imageView.getBoundsInParent().getHeight());
-
-                    rectangleSelection.setZoomValue(zoomProperty.getValue());
-                }
             }
         });
 
@@ -207,10 +196,6 @@ public class MainWindowController implements Initializable {
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 imageView.setFitWidth(newSceneWidth.doubleValue());
                 zoomProperty.set(100);
-
-                if(rectangleSelection != null){
-                    rectangleSelection.setZoomValue(zoomProperty.getValue());
-                }
             }
         });
 
@@ -219,10 +204,6 @@ public class MainWindowController implements Initializable {
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
                 imageView.setFitHeight(newSceneHeight.doubleValue());
                 zoomProperty.set(100);
-
-                if(rectangleSelection != null){
-                    rectangleSelection.setZoomValue(zoomProperty.getValue());
-                }
             }
         });
 
@@ -306,11 +287,8 @@ public class MainWindowController implements Initializable {
                 break;
             case "ExitMenuItem":
                 System.out.print("EXIT");
-                if(rectangleSelection != null) {
-                    rectangleSelection.crop();
-                }
                 break;
-                }
+        }
 
     }
 
@@ -321,35 +299,49 @@ public class MainWindowController implements Initializable {
 
         switch (item.getId()) {
             case "StartOcrMenuItem":
-                OcrEngine ocrEngine = OcrEngine.getInstance();
-                String result = ocrEngine.getOcrResult(loadedItemList.get(currentSelectedItemIndex).getFile());
-               List<HocrElement> list = HocrParser.createAst(result);
-                List<Page> pages = HocrParser.parse(result);
+                if(!loadedItemList.isEmpty()){
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PageOCRChooserWindowScene.fxml"));
 
-                System.out.println("");
-                List<Line> p = pages.get(0).getAllLines();
-                List<Word> a = p.get(0).getWords();
-                List<String> textLines = pages.get(0).getAllLinesAsStrings();
+                    Parent root = (Parent) fxmlLoader.load();
+                    PageOCRChooserWindowController controller = fxmlLoader.<PageOCRChooserWindowController>getController();
+                    controller.setLoadedItemList(loadedItemList);
 
-                for (String string : textLines) {
-                    System.out.print(string);
-
-                    loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getPage().appendText(string);
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initOwner(Utils.getMainWindow());
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.show();
                 }
-
-                String string = loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getPage().getText();
+//                OcrEngine ocrEngine = OcrEngine.getInstance();
+//                String result = ocrEngine.getOcrResult(loadedItemList.get(currentSelectedItemIndex).getFile());
+//               List<HocrElement> list = HocrParser.createAst(result);
+//                List<Page> pages = HocrParser.parse(result);
+//
+//                System.out.println("");
+//                List<Line> p = pages.get(0).getAllLines();
+//                List<Word> a = p.get(0).getWords();
+//                List<String> textLines = pages.get(0).getAllLinesAsStrings();
+//
+//                for (String string : textLines) {
+//                    System.out.print(string);
+//
+//                    loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getPage().appendText(string);
+//                }
+//
+//                String string = loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getPage().getText();
 
                 break;
             case "OCRSettingsMenuItem":
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/OCRSettingsScene.fxml"));
                 Scene scene = new Scene(root);
-                Stage stahe = new Stage();
-                stahe.initModality(Modality.WINDOW_MODAL);
-                //stahe.initOwner(this.borderPaneLeft.getScene().getWindow());
-                stahe.initOwner(Utils.getMainWindow());
-                stahe.setScene(scene);
-                stahe.setResizable(false);
-                stahe.show();
+                Stage stage = new Stage();
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(Utils.getMainWindow());
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
 
                 break;
         }
@@ -375,7 +367,12 @@ public class MainWindowController implements Initializable {
             case "zoomDecreasingButton":
                 break;
             case "cropImageButton":
-                rectangleSelection = new RectangleSelection(imageGroup);
+                if(rectangleSelection == null) {
+                    rectangleSelection = new RectangleSelection(imageGroup);
+                }else{
+                    rectangleSelection.removeSelection();
+                    rectangleSelection = null;
+                }
                 break;
         }
     }
@@ -418,6 +415,14 @@ public class MainWindowController implements Initializable {
         currentSelectedItemIndex = imagesListView.getSelectionModel().getSelectedIndex();
         imageSizeLabel.setText("" + loadedItemList.get(imagesListView.getSelectionModel().getSelectedIndex()).getImage().getHeight() + " x " + loadedItemList.get(imagesListView.getSelectionModel().getSelectedIndex()).getImage().getWidth());
         refreshTextEditorPane();
+    }
+
+    public void addNewEasyReaderItemToList(EasyReaderItem item){
+        this.loadedItemList.add(item);
+        this.observableList.clear();
+        this.observableList.addAll(this.loadedItemList);
+
+        imagesListView.refresh();
     }
 
     public void initImageListView(ArrayList<EasyReaderItem> list) {

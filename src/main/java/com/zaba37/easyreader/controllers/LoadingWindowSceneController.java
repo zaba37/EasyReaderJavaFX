@@ -6,27 +6,21 @@ package com.zaba37.easyreader.controllers;
  * and open the template in the editor.
  */
 import com.zaba37.easyreader.Utils;
-import com.zaba37.easyreader.actions.menuBar.ImageBackgroundLoader;
+import com.zaba37.easyreader.asyncTasks.ImageBackgroundLoader;
 import com.zaba37.easyreader.models.EasyReaderItem;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.AnimationTimer;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.ghost4j.document.DocumentException;
 import org.ghost4j.document.PDFDocument;

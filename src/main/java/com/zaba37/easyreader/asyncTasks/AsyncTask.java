@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zaba37.easyreader.actions.menuBar;
+package com.zaba37.easyreader.asyncTasks;
 
 import javafx.application.Platform;
 
@@ -29,7 +29,6 @@ public abstract class AsyncTask {
 
             @Override
             public void run() {
-
                 progressCallback(params);
             }
         });
@@ -46,7 +45,6 @@ public abstract class AsyncTask {
 
                 @Override
                 public void run() {
-
                     onPostExecute();
                 }
             });

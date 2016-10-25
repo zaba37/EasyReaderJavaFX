@@ -1,12 +1,20 @@
 package com.zaba37.easyreader.imageEditor;
 
 import com.zaba37.easyreader.Utils;
+import com.zaba37.easyreader.asyncTasks.ImageBackgroundCropController;
+import com.zaba37.easyreader.controllers.LoadingWindowSceneController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.SnapshotParameters;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
@@ -15,12 +23,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 /**
  * Created by zaba3 on 19.10.2016.
@@ -29,7 +41,6 @@ public class RectangleSelection {
 
     private final DragContext dragContext = new DragContext();
     private Rectangle rect = new Rectangle();
-    private double zoomValue = 0;
     private Group group;
     private ImageView imageView;
 
@@ -37,21 +48,11 @@ public class RectangleSelection {
         return rect.getBoundsInParent();
     }
 
-    public void setZoomValue(double zoomValue){
-        System.out.println(zoomValue);
-        System.out.print("X: " + rect.getX());
-        System.out.print("Y: " + rect.getY());
-        System.out.print("Height: " + rect.getHeight());
-        System.out.print("Width: " + rect.getWidth());
-        System.out.println();
-        this.zoomValue = zoomValue;
-    }
-
     public RectangleSelection(Group group) {
 
         this.group = group;
         this.imageView = (ImageView) group.getChildren().get(0);
-        rect = new Rectangle( 0,0,0,0);
+        rect = new Rectangle(0, 0, 0, 0);
         rect.setStroke(Color.BLUE);
         rect.setStrokeWidth(1);
         rect.setStrokeLineCap(StrokeLineCap.ROUND);
@@ -61,74 +62,66 @@ public class RectangleSelection {
         group.addEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseDraggedEventHandler);
         group.addEventHandler(MouseEvent.MOUSE_RELEASED, onMouseReleasedEventHandler);
 
+        showInformationAlert();
     }
 
-    public void crop() {
+    private void showInformationAlert() {
+        Alert alert = createAlertWithOptOut(Alert.AlertType.INFORMATION, "Crop function", null,
+                "Are you sure you wish to exit?", "Do not ask again",
+                param -> {
+                    Preferences.userRoot().node(Utils.KEY_PREFERENCES).put(Utils.KEY_SHOW_INFORMATION_CROP_FUNCTION, param ? "Always" : "Never");
+                    return null;
+                }, ButtonType.OK);
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Image");
+        if (alert.showAndWait().filter(t -> t == ButtonType.YES).isPresent()) {
 
-        File file = fileChooser.showSaveDialog(Utils.getMainStage());
-        if (file == null)
-            return;
-
-        int widthFrame = (int) getBounds().getWidth();
-        int heightFrame = (int) getBounds().getHeight();
-
-        int widthShowImage = (int)imageView.getBoundsInParent().getWidth();
-        int heightShowImage = (int)imageView.getBoundsInParent().getHeight();
-
-        int correctFrameWidth = (int) ((imageView.getImage().getWidth() / widthShowImage) * widthFrame);
-        int correctFrameHeight = (int) ((imageView.getImage().getHeight() / heightShowImage) * heightFrame);
-
-        int pointX = 0;
-        int pointY = 0;
-
-        if(imageView.getImage().getHeight() >= heightShowImage && imageView.getImage().getWidth() >= widthShowImage){
-            pointX = (int) getBounds().getMinX() * 4;
-            pointY = (int) (getBounds().getMinY() * 3);
-        }else{
-            pointX = (int) getBounds().getMinX() / 4;
-            pointY = (int) (getBounds().getMinY() / 3);
         }
+    }
 
-        PixelReader reader = imageView.getImage().getPixelReader();
-        WritableImage newImage = new WritableImage(reader, pointX, pointY, correctFrameWidth, correctFrameHeight);
+    private void showSaveSelectionAlert() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
-//        SnapshotParameters parameters = new SnapshotParameters();
-//        parameters.setFill(Color.TRANSPARENT);
-//        parameters.setViewport(new Rectangle2D( bounds.getMinX(), bounds.getMinY(), width, height));
-//
-//        WritableImage wi = new WritableImage( width, height);
-//        imageView.snapshot(parameters, wi);
+        alert.setHeaderText("Do you want to cut the selected part of the image and add it to the list of loaded images in the program?");
 
-        // save image
-        // !!! has bug because of transparency (use approach below) !!!
-        // --------------------------------
-//        try {
-//          ImageIO.write(SwingFXUtils.fromFXImage( wi, null), "jpg", file);
-//      } catch (IOException e) {
-//          e.printStackTrace();
-//      }
+        if (alert.showAndWait().filter(t -> t == ButtonType.OK).isPresent()) {
+            crop();
+        }
+    }
 
+    private void crop() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ImageBackgroundCropWindowScene.fxml"));
 
-        // save image (without alpha)
-        // --------------------------------
-        BufferedImage bufImageARGB = SwingFXUtils.fromFXImage(newImage, null);
-        BufferedImage bufImageRGB = new BufferedImage(bufImageARGB.getWidth(), bufImageARGB.getHeight(), BufferedImage.OPAQUE);
-
-        Graphics2D graphics = bufImageRGB.createGraphics();
-        graphics.drawImage(bufImageARGB, 0, 0, null);
-
+        Parent root = null;
         try {
-            ImageIO.write(bufImageRGB, "jpg", file);
-            System.out.println( "Image saved to " + file.getAbsolutePath());
+            root = (Parent) fxmlLoader.load();
+            ImageBackgroundCropController cropController = fxmlLoader.<ImageBackgroundCropController>getController();
+
+            cropController.setImageView(imageView);
+            cropController.setBounds(getBounds());
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(Utils.getMainWindow());
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+
+            cropController.execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        graphics.dispose();
+    public void removeSelection() {
+        rect.setX(0);
+        rect.setY(0);
+        rect.setWidth(0);
+        rect.setHeight(0);
 
+        group.removeEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressedEventHandler);
+        group.removeEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseDraggedEventHandler);
+        group.removeEventHandler(MouseEvent.MOUSE_RELEASED, onMouseReleasedEventHandler);
     }
 
     EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
@@ -136,9 +129,14 @@ public class RectangleSelection {
         @Override
         public void handle(MouseEvent event) {
 
-            if( event.isSecondaryButtonDown())
+            if (event.isSecondaryButtonDown())
                 return;
 
+            if (rect.getWidth() != 0 && rect.getHeight() != 0) {
+                if (event.getX() >= rect.getX() && event.getX() <= rect.getX() + rect.getWidth() && event.getY() >= rect.getY() && event.getY() <= rect.getY() + rect.getHeight()) {
+                    showSaveSelectionAlert();
+                }
+            }
 
             // remove old rect
             rect.setX(0);
@@ -146,8 +144,7 @@ public class RectangleSelection {
             rect.setWidth(0);
             rect.setHeight(0);
 
-            group.getChildren().remove( rect);
-
+            group.getChildren().remove(rect);
 
             // prepare new drag operation
             dragContext.mouseAnchorX = event.getX();
@@ -158,7 +155,8 @@ public class RectangleSelection {
             rect.setWidth(0);
             rect.setHeight(0);
 
-            group.getChildren().add( rect);
+            group.getChildren().add(rect);
+
         }
     };
 
@@ -167,21 +165,21 @@ public class RectangleSelection {
         @Override
         public void handle(MouseEvent event) {
 
-            if( event.isSecondaryButtonDown())
+            if (event.isSecondaryButtonDown())
                 return;
 
             double offsetX = event.getX() - dragContext.mouseAnchorX;
             double offsetY = event.getY() - dragContext.mouseAnchorY;
 
-            if( offsetX > 0)
-                rect.setWidth( offsetX);
+            if (offsetX > 0)
+                rect.setWidth(offsetX);
             else {
                 rect.setX(event.getX());
                 rect.setWidth(dragContext.mouseAnchorX - rect.getX());
             }
 
-            if( offsetY > 0) {
-                rect.setHeight( offsetY);
+            if (offsetY > 0) {
+                rect.setHeight(offsetY);
             } else {
                 rect.setY(event.getY());
                 rect.setHeight(dragContext.mouseAnchorY - rect.getY());
@@ -195,23 +193,44 @@ public class RectangleSelection {
         @Override
         public void handle(MouseEvent event) {
 
-            if( event.isSecondaryButtonDown())
+            if (event.isSecondaryButtonDown())
                 return;
-
-                /*
-                rect.setX(0);
-                rect.setY(0);
-                rect.setWidth(0);
-                rect.setHeight(0);
-
-                group.getChildren().remove( rect);
-                */
-
         }
     };
 
     private static final class DragContext {
         public double mouseAnchorX;
         public double mouseAnchorY;
+    }
+
+    private static Alert createAlertWithOptOut(Alert.AlertType type, String title, String headerText,
+                                               String message, String optOutMessage, Callback<Boolean, Void> optOutAction,
+                                               ButtonType... buttonTypes) {
+        Alert alert = new Alert(type);
+
+        alert.getDialogPane().applyCss();
+        Node graphic = alert.getDialogPane().getGraphic();
+
+        alert.setDialogPane(new DialogPane() {
+            @Override
+            protected Node createDetailsButton() {
+                CheckBox optOut = new CheckBox();
+                optOut.setText(optOutMessage);
+                optOut.setOnAction(e -> optOutAction.call(optOut.isSelected()));
+                return optOut;
+            }
+        });
+
+        alert.getDialogPane().getButtonTypes().addAll(buttonTypes);
+        alert.getDialogPane().setContentText(message);
+
+        alert.getDialogPane().setExpandableContent(new Group());
+        alert.getDialogPane().setExpanded(true);
+
+        alert.getDialogPane().setGraphic(graphic);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+
+        return alert;
     }
 }
