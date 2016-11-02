@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
 import org.apache.commons.io.FileUtils;
 import org.ghost4j.document.DocumentException;
 import org.ghost4j.document.PDFDocument;
@@ -61,7 +63,8 @@ public class ImageBackgroundLoader extends AsyncTask {
                 if (isPDFFile(this.controller.getFilesList().get(fileCounter))) {
                     list.addAll(pdfToEasyReaderItems(this.controller.getFilesList().get(fileCounter)));
                 } else {
-                    list.add(new EasyReaderItem(this.controller.getFilesList().get(fileCounter)));
+                    //list.add(new EasyReaderItem(this.controller.getFilesList().get(fileCounter)));
+                    list.add(copyImageToTmpFolder(this.controller.getFilesList().get(fileCounter)));
                     this.publishProgress((Object) null);
                     itemCounter++;
                 }
@@ -153,6 +156,21 @@ public class ImageBackgroundLoader extends AsyncTask {
         }
 
         return pdfItems;
+    }
+
+    private EasyReaderItem copyImageToTmpFolder(File imageFileToCopy){
+        javafx.scene.image.Image image = new javafx.scene.image.Image(imageFileToCopy.toURI().toString());
+
+        String filePath = tmpDirPath + File.separator + imageFileToCopy.getName() + ".png";
+        File imageFile = new File(filePath);
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", imageFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new EasyReaderItem(imageFile);
     }
 
     private String createTmpDirectory() {

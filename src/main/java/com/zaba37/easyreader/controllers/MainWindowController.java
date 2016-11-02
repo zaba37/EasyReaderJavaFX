@@ -417,6 +417,15 @@ public class MainWindowController implements Initializable {
         refreshTextEditorPane();
     }
 
+    public void addDecodeTextToItemPage(EasyReaderItem item){
+//        for(EasyReaderItem i : loadedItemList){
+//            if(i.getName().contains(item.getName())){
+//                i.getPagesList().clear();
+//                i.getPagesList().addAll(item.getPagesList());
+//            }
+//        }
+    }
+
     public void addNewEasyReaderItemToList(EasyReaderItem item){
         this.loadedItemList.add(item);
         this.observableList.clear();
