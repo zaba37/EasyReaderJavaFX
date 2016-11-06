@@ -166,6 +166,8 @@ public class MainWindowController implements Initializable {
     private final SuspendableNo updatingToolbar = new SuspendableNo();
     private StyledTextArea<ParStyle, TextStyle> cyrrentFocusTextArea;
     private RectangleSelection rectangleSelection;
+    private double sceneWidth;
+    private double sceneHeight;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -195,6 +197,7 @@ public class MainWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 imageView.setFitWidth(newSceneWidth.doubleValue());
+                sceneWidth = newSceneWidth.doubleValue();
                 zoomProperty.set(100);
             }
         });
@@ -203,6 +206,7 @@ public class MainWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
                 imageView.setFitHeight(newSceneHeight.doubleValue());
+                sceneHeight = newSceneHeight.doubleValue();
                 zoomProperty.set(100);
             }
         });
@@ -314,23 +318,6 @@ public class MainWindowController implements Initializable {
                     stage.setResizable(false);
                     stage.show();
                 }
-//                OcrEngine ocrEngine = OcrEngine.getInstance();
-//                String result = ocrEngine.getOcrResult(loadedItemList.get(currentSelectedItemIndex).getFile());
-//               List<HocrElement> list = HocrParser.createAst(result);
-//                List<Page> pages = HocrParser.parse(result);
-//
-//                System.out.println("");
-//                List<Line> p = pages.get(0).getAllLines();
-//                List<Word> a = p.get(0).getWords();
-//                List<String> textLines = pages.get(0).getAllLinesAsStrings();
-//
-//                for (String string : textLines) {
-//                    System.out.print(string);
-//
-//                    loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getPage().appendText(string);
-//                }
-//
-//                String string = loadedItemList.get(currentSelectedItemIndex).getPagesList().get(0).getPage().getText();
 
                 break;
             case "OCRSettingsMenuItem":
@@ -815,5 +802,13 @@ public class MainWindowController implements Initializable {
                 });
             }
         });
+    }
+
+    public double getSceneWidth(){
+        return sceneWidth;
+    }
+
+    public double getSceneHeight(){
+        return sceneHeight;
     }
 }

@@ -3,6 +3,8 @@ package com.zaba37.easyreader.models;
 import com.zaba37.easyreader.Utils;
 import com.zaba37.easyreader.textEditor.ParStyle;
 import com.zaba37.easyreader.textEditor.TextStyle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.print.Paper;
 import javafx.scene.control.IndexRange;
 import javafx.scene.paint.Color;
@@ -33,16 +35,33 @@ public class Page {
         page.setWrapText(true);
         page.setStyleCodecs(ParStyle.CODEC, TextStyle.CODEC);
 
-        page.setMinHeight(Paper.A4.getHeight());
-        page.setMaxHeight(Paper.A4.getHeight());
-        page.setMinWidth(Paper.A4.getWidth());
-        page.setMaxWidth(Paper.A4.getWidth());
+     //   page.setMinHeight(Paper.A4.getHeight());
+        //page.setMaxHeight(Paper.A4.getHeight());
+     //  page.setMinWidth(Paper.A4.getWidth());
+     //   page.setMaxWidth(Paper.A4.getWidth());
+        page.setMinHeight(Utils.getMainWindowController().getSceneHeight());
+        page.setMinWidth(Utils.getMainWindowController().getSceneWidth());
 
         page.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 Utils.getMainWindowController().setCurrentFocusTextArea(page);
             }
         });
+
+        page.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                page.setMinWidth(newSceneWidth.doubleValue());
+            }
+        });
+
+        page.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+                page.setMinHeight(newSceneHeight.doubleValue());
+            }
+        });
+
 
         page.textProperty().addListener((observable, oldValue, newValue) -> {
             synchronized (page) {
