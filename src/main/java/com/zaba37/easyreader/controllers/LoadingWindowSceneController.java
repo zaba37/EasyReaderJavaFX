@@ -87,7 +87,7 @@ public class LoadingWindowSceneController implements Initializable {
             }
         }
 
-        value = ((double) 100 / filesNumber)/100;
+        value = ((double) 100 / filesNumber) /100;
     }
 
     public void updateProgressIndycator() {

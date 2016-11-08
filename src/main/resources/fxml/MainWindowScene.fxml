@@ -257,7 +257,8 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox fx:id="textVBox" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1" />
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" fx:id="textAreaArchorPane">
+                        </AnchorPane>
                      </children>
                   </GridPane>
                </children>

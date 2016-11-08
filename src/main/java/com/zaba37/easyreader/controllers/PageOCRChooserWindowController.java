@@ -1,6 +1,7 @@
 package com.zaba37.easyreader.controllers;
 
 import com.zaba37.easyreader.Utils;
+import com.zaba37.easyreader.asyncTasks.OCRProgressController;
 import com.zaba37.easyreader.models.EasyReaderItem;
 import com.zaba37.easyreader.ocr.OcrEngine;
 import io.github.karols.hocr4j.Page;
@@ -13,16 +14,21 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -60,17 +66,6 @@ public class PageOCRChooserWindowController implements Initializable {
         } catch (AWTException e) {
             e.printStackTrace();
         }
-
-        //selectAllBox.selectedProperty().addListener();
-        /* addListener((observable, oldValue, newValue) -> {
-            if(newValue && !deselectFlag){
-                listView.getSelectionModel().selectAll();
-            }else{
-                listView.getSelectionModel().select(-1);
-            }
-
-            deselectFlag = false;
-        });*/
 
         listView.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue){
@@ -119,22 +114,31 @@ public class PageOCRChooserWindowController implements Initializable {
         ArrayList<EasyReaderItem> selectedItemsList = new ArrayList<>();
         selectedItemsList.addAll(listView.getSelectionModel().getSelectedItems());
 
-        OcrEngine ocrEngine = OcrEngine.getInstance();
-        String result;
+        if(!selectedItemsList.isEmpty()){
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/OCRProgressController.fxml"));
 
-        for(EasyReaderItem i : selectedItemsList){
-            result = ocrEngine.getOcrResult(i.getFile());
-            ArrayList<Page> pages = new ArrayList<>();
-            ArrayList<String> textLines = new ArrayList<>();
+            Parent root = null;
 
-            pages.addAll(HocrParser.parse(result));
-            textLines.addAll(pages.get(0).getAllLinesAsStrings());
-
-            for(String line : textLines){
-                i.getPagesList().get(0).getPage().appendText(line);
+            try {
+                root = (Parent) fxmlLoader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-            Utils.getMainWindowController().addDecodeTextToItemPage(i);
+            OCRProgressController controller = fxmlLoader.<OCRProgressController>getController();
+            controller.setLoadedItemList(selectedItemsList);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(Utils.getMainWindow());
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+
+            keyRelese();
+            controller.execute();
+            ((Stage) selectAllBox.getScene().getWindow()).close();
         }
     }
 

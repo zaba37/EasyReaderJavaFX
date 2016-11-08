@@ -63,7 +63,6 @@ public class ImageBackgroundLoader extends AsyncTask {
                 if (isPDFFile(this.controller.getFilesList().get(fileCounter))) {
                     list.addAll(pdfToEasyReaderItems(this.controller.getFilesList().get(fileCounter)));
                 } else {
-                    //list.add(new EasyReaderItem(this.controller.getFilesList().get(fileCounter)));
                     list.add(copyImageToTmpFolder(this.controller.getFilesList().get(fileCounter)));
                     this.publishProgress((Object) null);
                     itemCounter++;

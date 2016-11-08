@@ -75,6 +75,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import javafx.scene.text.*;
 
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.InlineCssTextArea;
 import org.fxmisc.richtext.StyledTextArea;
 import org.fxmisc.richtext.model.Paragraph;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -156,6 +158,9 @@ public class MainWindowController implements Initializable {
     @FXML
     private Group imageGroup;
 
+    @FXML
+    private AnchorPane textAreaArchorPane;
+
     private DoubleProperty zoomProperty;
     private Group textEditorScrollGroup;
     private Parent textZoomPane;
@@ -166,8 +171,8 @@ public class MainWindowController implements Initializable {
     private final SuspendableNo updatingToolbar = new SuspendableNo();
     private StyledTextArea<ParStyle, TextStyle> cyrrentFocusTextArea;
     private RectangleSelection rectangleSelection;
-    private double sceneWidth;
-    private double sceneHeight;
+    private StyledTextArea<ParStyle, TextStyle> textArena;
+    VirtualizedScrollPane<InlineCssTextArea> vsPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -197,7 +202,6 @@ public class MainWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 imageView.setFitWidth(newSceneWidth.doubleValue());
-                sceneWidth = newSceneWidth.doubleValue();
                 zoomProperty.set(100);
             }
         });
@@ -206,7 +210,6 @@ public class MainWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
                 imageView.setFitHeight(newSceneHeight.doubleValue());
-                sceneHeight = newSceneHeight.doubleValue();
                 zoomProperty.set(100);
             }
         });
@@ -227,31 +230,6 @@ public class MainWindowController implements Initializable {
         showImagesListButton.setVisible(true);
         showImagesListButton.toFront();
 
-        //    textArea.setWrapText(true);
-
-        //   ArrayList<TextArea> list = new ArrayList();
-
-        //           textEditorScrollGroup = new Group();
-        //          VBox v = new VBox();
-
-        //   for (int i = 0; i < 10; i++) {
-        //       TextArea a = new TextArea();
-        //       a.setMinHeight(Paper.A4.getHeight());
-        //       a.setMaxHeight(Paper.A4.getHeight());
-        //       a.setMinWidth(Paper.A4.getWidth());
-        //      a.setMaxWidth(Paper.A4.getWidth());
-        //      list.add(a);
-        //     v.getChildren().add(a);
-
-        // }
-
-        //  textEditorScrollGroup.getChildren().add(v);
-
-        // textZoomPane = createZoomPane(textEditorScrollGroup);
-        // textVBox.getChildren().add(textZoomPane);
-
-        //System
-
         textSizeComboBox.setItems(FXCollections.observableArrayList(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40, 48, 56, 64, 72));
         textSizeComboBox.getSelectionModel().select(Integer.valueOf(12));
         textFontComboBox.setItems(FXCollections.observableList(Font.getFamilies()));
@@ -264,6 +242,21 @@ public class MainWindowController implements Initializable {
         textFontComboBox.setOnAction(evt -> updateFontFamily(textFontComboBox.getValue()));
         textColorColorPicker.valueProperty().addListener((o, old, color) -> updateTextColor(color));
         textBackgroundColorColorPicker.valueProperty().addListener((o, old, color) -> updateBackgroundColor(color));
+
+        textArena = new StyledTextArea<>(
+                ParStyle.EMPTY, (paragraph, style) -> paragraph.setStyle(style.toCss()),
+                TextStyle.EMPTY.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK),
+                (text, style) -> text.setStyle(style.toCss()));
+
+        vsPane = new VirtualizedScrollPane(textArena);
+
+        AnchorPane.setTopAnchor(vsPane, 3.0);
+        AnchorPane.setBottomAnchor(vsPane, 3.0);
+        AnchorPane.setLeftAnchor(vsPane, 3.0);
+        AnchorPane.setRightAnchor(vsPane, 3.0);
+
+        textAreaArchorPane.getChildren().add(vsPane);
+
     }
 
     @FXML
@@ -283,11 +276,11 @@ public class MainWindowController implements Initializable {
                 break;
             case "SaveAsDocxMenuItem":
                 System.out.print("DOCX");
-                SaveManager.getInstance().saveToDOCX(loadedItemList.get(0).getPagesList().get(0).getPage().getDocument());
+                SaveManager.getInstance().saveToDOCX(loadedItemList.get(currentSelectedItemIndex).getStyledDocument());
                 break;
             case "SaveAsPdfMenuItem":
                 System.out.print("PDF");
-                SaveManager.getInstance().saveToPDF(loadedItemList.get(0).getPagesList().get(0).getPage().getDocument());
+                SaveManager.getInstance().saveToPDF(loadedItemList.get(currentSelectedItemIndex).getStyledDocument());
                 break;
             case "ExitMenuItem":
                 System.out.print("EXIT");
@@ -402,15 +395,6 @@ public class MainWindowController implements Initializable {
         currentSelectedItemIndex = imagesListView.getSelectionModel().getSelectedIndex();
         imageSizeLabel.setText("" + loadedItemList.get(imagesListView.getSelectionModel().getSelectedIndex()).getImage().getHeight() + " x " + loadedItemList.get(imagesListView.getSelectionModel().getSelectedIndex()).getImage().getWidth());
         refreshTextEditorPane();
-    }
-
-    public void addDecodeTextToItemPage(EasyReaderItem item){
-//        for(EasyReaderItem i : loadedItemList){
-//            if(i.getName().contains(item.getName())){
-//                i.getPagesList().clear();
-//                i.getPagesList().addAll(item.getPagesList());
-//            }
-//        }
     }
 
     public void addNewEasyReaderItemToList(EasyReaderItem item){
@@ -556,20 +540,16 @@ public class MainWindowController implements Initializable {
     }
 
     public void refreshTextEditorPane() {
-        textVBox.getChildren().remove(textZoomPane);
+        textAreaArchorPane.getChildren().remove(vsPane);
 
-        textEditorScrollGroup = new Group();
-        VBox v = new VBox();
-        v.setSpacing(5);
+        vsPane = new VirtualizedScrollPane(loadedItemList.get(currentSelectedItemIndex).getTextArea());
 
-        for (int i = 0; i < loadedItemList.get(currentSelectedItemIndex).getPagesList().size(); i++) {
-            v.getChildren().add(loadedItemList.get(currentSelectedItemIndex).getPagesList().get(i).getPage());
-        }
+        AnchorPane.setTopAnchor(vsPane, 3.0);
+        AnchorPane.setBottomAnchor(vsPane, 3.0);
+        AnchorPane.setLeftAnchor(vsPane, 3.0);
+        AnchorPane.setRightAnchor(vsPane, 3.0);
 
-        textEditorScrollGroup.getChildren().add(v);
-        textZoomPane = createZoomPane(textEditorScrollGroup);
-
-        textVBox.getChildren().add(textZoomPane);
+        textAreaArchorPane.getChildren().add(vsPane);
     }
 
     public void setCurrentFocusTextArea(StyledTextArea<ParStyle, TextStyle> area) {
@@ -586,10 +566,6 @@ public class MainWindowController implements Initializable {
 
     public void toggleBold() {
         updateStyleInSelection(spans -> TextStyle.bold(!spans.styleStream().allMatch(style -> style.bold.orElse(false))));
-        System.out.println(Paper.A4.getHeight());
-        System.out.println(cyrrentFocusTextArea.getTotalHeightEstimate());
-        System.out.println(cyrrentFocusTextArea.getParagraph(cyrrentFocusTextArea.getParagraphs().size() - 1).getText());
-
     }
 
     public void toggleItalic() {
@@ -802,13 +778,5 @@ public class MainWindowController implements Initializable {
                 });
             }
         });
-    }
-
-    public double getSceneWidth(){
-        return sceneWidth;
-    }
-
-    public double getSceneHeight(){
-        return sceneHeight;
     }
 }

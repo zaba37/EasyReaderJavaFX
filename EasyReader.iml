@@ -39,6 +39,7 @@
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.xmlgraphics:xmlgraphics-commons:1.4" level="project" />
     <orderEntry type="library" name="Maven: com.lowagie:itext:2.1.7" level="project" />
+    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.7.2" level="project" />
     <orderEntry type="library" name="Maven: org.docx4j:docx4j:3.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.plutext:jaxb-svg11:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: net.engio:mbassador:1.2.4.2" level="project" />

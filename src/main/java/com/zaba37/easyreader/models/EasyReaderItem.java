@@ -36,14 +36,27 @@ public class EasyReaderItem {
     private final File imageFile;
     private Image image;
     private final String name;
-    private ArrayList<Page> pagesList;
+    private StyledTextArea<ParStyle, TextStyle> textArea;
 
     public EasyReaderItem(File file) {
         this.imageFile = file;
         image = new Image(file.toURI().toString());
         name = file.getName();
-        pagesList = new ArrayList();
-        addPage();
+
+        textArea = new StyledTextArea<>(
+                ParStyle.EMPTY, (paragraph, style) -> paragraph.setStyle(style.toCss()),
+                TextStyle.EMPTY.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK),
+                (text, style) -> text.setStyle(style.toCss()));
+
+        textArea.setStyleCodecs(ParStyle.CODEC, TextStyle.CODEC);
+        Utils.getMainWindowController().addListenersForArea(textArea);
+
+        textArea.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                Utils.getMainWindowController().setCurrentFocusTextArea(textArea);
+            }
+        });
+
     }
 
     public void rotatedImage(double angle) {
@@ -111,14 +124,12 @@ public class EasyReaderItem {
         return imageFile;
     }
 
-    public void addPage() {
-        Page newPage = new Page();
-        pagesList.add(newPage);
-        newPage.setIndexPage(pagesList.size() - 1);
+    public org.fxmisc.richtext.model.StyledDocument getStyledDocument(){
+        return textArea.getDocument();
     }
 
-    public ArrayList<Page> getPagesList() {
-        return pagesList;
+    public StyledTextArea<ParStyle, TextStyle> getTextArea(){
+        return textArea;
     }
 
 }
