@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zaba37.easyreader.controllers.ReplaceWordController">
+   <children>
+      <HBox layoutX="189.0" layoutY="48.0" prefHeight="150.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="150.0" prefWidth="400.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="400.0">
+                     <children>
+                        <Label prefHeight="50.0" text="Replace: ">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="replaceTextField" prefWidth="340.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="400.0">
+                     <children>
+                        <Label prefHeight="50.0" prefWidth="48.0" text="For: ">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="forTextField" prefWidth="340.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="400.0" spacing="5.0">
+                     <children>
+                        <Button fx:id="replaceOnCurrentPageButton" mnemonicParsing="false" onAction="#replaceOnCurrentPage" prefWidth="170.0" text="Replace on current page" />
+                        <Button fx:id="replaceOnAllPagesButton" mnemonicParsing="false" onAction="#replaceOnAllPages" prefWidth="170.0" text="Replace on all pages" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -13,7 +13,9 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.beans.value.ChangeListener;
@@ -25,6 +27,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import org.fxmisc.richtext.StyledTextArea;
 
+import javax.imageio.ImageIO;
 import javax.swing.text.StyledDocument;
 
 /**
@@ -40,7 +43,13 @@ public class EasyReaderItem {
 
     public EasyReaderItem(File file) {
         this.imageFile = file;
-        image = new Image(file.toURI().toString());
+
+        try {
+            image = scale(ImageIO.read(file), 0.3);//new Image(file.toURI().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         name = file.getName();
 
         textArea = new StyledTextArea<>(
@@ -49,6 +58,7 @@ public class EasyReaderItem {
                 (text, style) -> text.setStyle(style.toCss()));
 
         textArea.setStyleCodecs(ParStyle.CODEC, TextStyle.CODEC);
+
         Utils.getMainWindowController().addListenersForArea(textArea);
 
         textArea.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -81,10 +91,36 @@ public class EasyReaderItem {
 
         SwingFXUtils.toFXImage(newImage, writableImage);
 
+        try {
+            bufferedImage = ImageIO.read(imageFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        affineTransform = new AffineTransform();
+
+        if (angle < 0) {
+            affineTransform.rotate(Math.toRadians(angle), bufferedImage.getWidth() / 2, bufferedImage.getWidth() / 2);
+        } else {
+            affineTransform.rotate(Math.toRadians(angle), bufferedImage.getHeight() / 2, bufferedImage.getHeight() / 2);
+        }
+
+        op = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BICUBIC);
+
+        newImage = new BufferedImage(bufferedImage.getHeight(), bufferedImage.getWidth(), bufferedImage.getType());
+
+        op.filter(bufferedImage, newImage);
+
+        try {
+            ImageIO.write(newImage, "png", imageFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         this.image = writableImage;
     }
 
-    private BufferedImage scale(BufferedImage source,double ratio) {
+    private Image scale(BufferedImage source, double ratio) {
         int w = (int) (source.getWidth() * ratio);
         int h = (int) (source.getHeight() * ratio);
         BufferedImage bi = getCompatibleImage(w, h);
@@ -95,7 +131,10 @@ public class EasyReaderItem {
         g2d.drawRenderedImage(source, at);
         g2d.dispose();
 
-        return bi;
+        WritableImage writableImage = new WritableImage(bi.getWidth(), bi.getHeight());
+        SwingFXUtils.toFXImage(bi, writableImage);
+
+        return writableImage;
     }
 
     private BufferedImage getCompatibleImage(int w, int h) {
@@ -106,7 +145,6 @@ public class EasyReaderItem {
 
         return image;
     }
-
 
     public String getName() {
         return name;

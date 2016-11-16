@@ -58,7 +58,7 @@ public class ImageBackgroundCropController extends AsyncTask implements Initiali
     @Override
     public void doInBackground() {
 
-        file = new File(tmpDirPath + File.separator + new Timestamp(new Date().getTime()).toString() + ".png");
+        file = new File(tmpDirPath + File.separator + new Timestamp(new Date().getTime()).toString().replaceAll(":", "-") + ".png");
 
         int widthFrame = (int) bounds.getWidth();
         int heightFrame = (int) bounds.getHeight();

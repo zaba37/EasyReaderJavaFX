@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.*?>
 <?import org.fxmisc.richtext.*?>
 
-<AnchorPane id="AnchorPane" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zaba37.easyreader.controllers.MainWindowController">
+<AnchorPane id="AnchorPane" fx:id="mainAnchorPane" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zaba37.easyreader.controllers.MainWindowController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -56,12 +56,15 @@
             <AnchorPane fx:id="borderPaneLeft" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="180.0" BorderPane.alignment="CENTER">
                <children>
                   <ListView fx:id="imagesListView" layoutY="1.0" onMouseClicked="#handleListMouseClick" prefHeight="200.0" prefWidth="180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="showImagesListButton" layoutY="234.0" mnemonicParsing="false" onAction="#handleShowImagesListButton" prefHeight="84.0" prefWidth="4.0" text="&gt;" visible="false" AnchorPane.leftAnchor="2.0">
+                  <Button fx:id="showImagesListButton" cacheShape="false" centerShape="false" focusTraversable="false" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleShowImagesListButton" pickOnBounds="false" prefHeight="554.0" prefWidth="10.0" scaleShape="false" text="&gt;" AnchorPane.leftAnchor="0.0">
                      <font>
-                        <Font size="1.0" />
+                        <Font size="8.0" />
                      </font>
+                     <rotationAxis>
+                        <Point3D />
+                     </rotationAxis>
                   </Button>
-                  <Button fx:id="hideImagesListButton" layoutX="148.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleHideImagesListButton" prefHeight="84.0" prefWidth="4.0" text="&lt;" textAlignment="RIGHT" AnchorPane.rightAnchor="-2.0">
+                  <Button fx:id="hideImagesListButton" layoutX="148.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleHideImagesListButton" prefHeight="84.0" prefWidth="4.0" style="-fx-font-weight: bold;" text="&lt;" textAlignment="RIGHT" AnchorPane.rightAnchor="-2.0">
                      <font>
                         <Font size="1.0" />
                      </font>
@@ -81,9 +84,6 @@
                         </Label>
                         <Label fx:id="imageSizeLabel" minWidth="115.0" text="0 x 0" />
                         <HBox>
-                           <children>
-                              <Slider />
-                           </children>
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -257,7 +257,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" fx:id="textAreaArchorPane">
+                        <AnchorPane fx:id="textAreaArchorPane" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                         </AnchorPane>
                      </children>
                   </GridPane>

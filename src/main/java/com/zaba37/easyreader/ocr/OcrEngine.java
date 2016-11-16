@@ -34,6 +34,7 @@ public class OcrEngine {
     private OcrEngine() {
         tesseract = new Tesseract1();
        //tesseract.setOcrEngineMode(ITessAPI.TessOcrEngineMode.OEM_TESSERACT_CUBE_COMBINED);
+
         tesseract.setHocr(true);
         tesseract.setTessVariable("hocr_font_info", "1");
         tesseract.setTessVariable("pitsync_linear_version", "6");

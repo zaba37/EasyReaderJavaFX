@@ -72,16 +72,22 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.15</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.languagetool/languagetool-core -->
+        <dependency>
+            <groupId>org.languagetool</groupId>
+            <artifactId>languagetool-core</artifactId>
+            <version>3.5</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.languagetool/language-all -->
+        <dependency>
+            <groupId>org.languagetool</groupId>
+            <artifactId>language-all</artifactId>
+            <version>3.5</version>
+        </dependency>
+
     </dependencies>
-
-    <!-- https://mvnrepository.com/artifact/org.languagetool/languagetool-core -->
-    <dependency>
-        <groupId>org.languagetool</groupId>
-        <artifactId>languagetool-core</artifactId>
-        <version>3.5</version>
-    </dependency>
-
-
     <build>
         <plugins>
             <plugin>

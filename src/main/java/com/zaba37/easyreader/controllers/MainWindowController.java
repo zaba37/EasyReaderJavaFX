@@ -48,6 +48,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -89,77 +90,31 @@ import static org.fxmisc.richtext.model.TwoDimensional.Bias.Forward;
 
 public class MainWindowController implements Initializable {
 
-    @FXML
-    private ScrollPane imageScrollPane;
-
-    @FXML
-    private ImageView imageView;
-
-    @FXML
-    private ListView imagesListView;
-
-    @FXML
-    private AnchorPane borderPaneLeft;
-
-    @FXML
-    private Button hideImagesListButton;
-
-    @FXML
-    private Button showImagesListButton;
-
-    @FXML
-    private Label imageSizeLabel;
-
-    @FXML
-    private ScrollPane textScrollPane;
-
-    @FXML
-    private VBox textVBox;
-
-    @FXML
-    private ComboBox<Integer> textSizeComboBox;
-
-    @FXML
-    private ComboBox<String> textFontComboBox;
-
-    @FXML
-    private ColorPicker textColorColorPicker;
-
-    @FXML
-    private ColorPicker textBackgroundColorColorPicker;
-
-    @FXML
-    private Button boldTextButton;
-
-    @FXML
-    private Button italicTextButton;
-
-    @FXML
-    private Button underlineTextButton;
-
-    @FXML
-    private Button strikethroughTextButton;
-
-    @FXML
-    private ToggleButton alginLeftTextButton;
-
-    @FXML
-    private ToggleButton alginCenterTextButton;
-
-    @FXML
-    private ToggleButton alginRightTextButton;
-
-    @FXML
-    private ToggleButton alginJustifyTextButton;
-
-    @FXML
-    private ToggleGroup alginGroup;
-
-    @FXML
-    private Group imageGroup;
-
-    @FXML
-    private AnchorPane textAreaArchorPane;
+    @FXML private ScrollPane imageScrollPane;
+    @FXML private ImageView imageView;
+    @FXML private ListView imagesListView;
+    @FXML private AnchorPane borderPaneLeft;
+    @FXML private Button hideImagesListButton;
+    @FXML private Button showImagesListButton;
+    @FXML private Label imageSizeLabel;
+    @FXML private ScrollPane textScrollPane;
+    @FXML private VBox textVBox;
+    @FXML private ComboBox<Integer> textSizeComboBox;
+    @FXML private ComboBox<String> textFontComboBox;
+    @FXML private ColorPicker textColorColorPicker;
+    @FXML private ColorPicker textBackgroundColorColorPicker;
+    @FXML private Button boldTextButton;
+    @FXML private Button italicTextButton;
+    @FXML private Button underlineTextButton;
+    @FXML private Button strikethroughTextButton;
+    @FXML private ToggleButton alginLeftTextButton;
+    @FXML private ToggleButton alginCenterTextButton;
+    @FXML private ToggleButton alginRightTextButton;
+    @FXML private ToggleButton alginJustifyTextButton;
+    @FXML private ToggleGroup alginGroup;
+    @FXML private Group imageGroup;
+    @FXML private AnchorPane textAreaArchorPane;
+    @FXML private AnchorPane mainAnchorPane;
 
     private DoubleProperty zoomProperty;
     private Group textEditorScrollGroup;
@@ -172,7 +127,7 @@ public class MainWindowController implements Initializable {
     private StyledTextArea<ParStyle, TextStyle> cyrrentFocusTextArea;
     private RectangleSelection rectangleSelection;
     private StyledTextArea<ParStyle, TextStyle> textArena;
-    VirtualizedScrollPane<InlineCssTextArea> vsPane;
+    private VirtualizedScrollPane<InlineCssTextArea> vsPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -217,14 +172,23 @@ public class MainWindowController implements Initializable {
         borderPaneLeft.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-                showImagesListButton.setLayoutY(newSceneHeight.doubleValue() / 2 - showImagesListButton.getHeight() / 2);
+             //   showImagesListButton.setLayoutY(newSceneHeight.doubleValue() / 2 - showImagesListButton.getHeight() / 2);
                 hideImagesListButton.setLayoutY(newSceneHeight.doubleValue() / 2 - hideImagesListButton.getHeight() / 2);
                 Utils.setMainWindow(borderPaneLeft.getScene().getWindow());
+                showImagesListButton.setMinHeight(newSceneHeight.doubleValue());
+                showImagesListButton.setMaxHeight(newSceneHeight.doubleValue());
+                System.out.println(newSceneHeight.doubleValue());
+
             }
         });
 
-        borderPaneLeft.setMaxWidth(4);
-        borderPaneLeft.setMinWidth(4);
+        mainAnchorPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+            borderPaneLeft.setMaxHeight(newValue.doubleValue() - 45);
+            borderPaneLeft.setMinHeight(newValue.doubleValue() - 45);
+        });
+
+        borderPaneLeft.setMaxWidth(20);
+        borderPaneLeft.setMinWidth(20);
 
         hideImagesListButton.setVisible(false);
         showImagesListButton.setVisible(true);
@@ -270,9 +234,43 @@ public class MainWindowController implements Initializable {
                 break;
             case "SaveAsTxtMenuItem":
                 System.out.print("TXT");
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SpellCheckerController.fxml"));
+
+                Parent root = null;
+
+                try {
+                    root = (Parent) fxmlLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                SpellCheckerController controller = fxmlLoader.<SpellCheckerController>getController();
+                controller.init(loadedItemList.get(currentSelectedItemIndex));
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initOwner(Utils.getMainWindow());
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+
                 break;
             case "SaveAsDocMenuItem":
                 System.out.print("DOC");
+                FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("/fxml/ReplaceWordController.fxml"));
+                Stage stage2 = new Stage();
+                Parent root2 = null;
+                try {
+                    root2 = (Parent)fxmlLoader2.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Scene scene2 = new Scene(root2);
+
+                stage2.setScene(scene2);
+                stage2.setAlwaysOnTop(true);
+                stage2.show();
                 break;
             case "SaveAsDocxMenuItem":
                 System.out.print("DOCX");
@@ -334,12 +332,12 @@ public class MainWindowController implements Initializable {
         switch (button.getId()) {
             case "rotateLeftButton":
                 loadedItemList.get(currentSelectedItemIndex).rotatedImage(-90);
-                imageView.setImage(loadedItemList.get(currentSelectedItemIndex).getImage());
+                imageView.setImage(new Image(loadedItemList.get(currentSelectedItemIndex).getFile().toURI().toString()));
                 imagesListView.refresh();
                 break;
             case "rotateRightButton":
                 loadedItemList.get(currentSelectedItemIndex).rotatedImage(90);
-                imageView.setImage(loadedItemList.get(currentSelectedItemIndex).getImage());
+                imageView.setImage(new Image(loadedItemList.get(currentSelectedItemIndex).getFile().toURI().toString()));
                 imagesListView.refresh();
                 break;
             case "zoomIncreasingButton":
@@ -377,23 +375,27 @@ public class MainWindowController implements Initializable {
         hideImagesListButton.setVisible(true);
         showImagesListButton.setVisible(false);
         showImagesListButton.toFront();
+        showImagesListButton.setMinWidth(0);
+        showImagesListButton.setMaxWidth(0);
     }
 
     @FXML
     private void handleHideImagesListButton(ActionEvent event) {
-        borderPaneLeft.setMaxWidth(4);
-        borderPaneLeft.setMinWidth(4);
+        borderPaneLeft.setMaxWidth(20);
+        borderPaneLeft.setMinWidth(20);
 
         hideImagesListButton.setVisible(false);
         showImagesListButton.setVisible(true);
         showImagesListButton.toFront();
+        showImagesListButton.setMinWidth(20);
+        showImagesListButton.setMaxWidth(20);
     }
 
     @FXML
     private void handleListMouseClick(MouseEvent arg) {
-        imageView.setImage(loadedItemList.get(imagesListView.getSelectionModel().getSelectedIndex()).getImage());
+        imageView.setImage(new Image(loadedItemList.get(imagesListView.getSelectionModel().getSelectedIndex()).getFile().toURI().toString()));
         currentSelectedItemIndex = imagesListView.getSelectionModel().getSelectedIndex();
-        imageSizeLabel.setText("" + loadedItemList.get(imagesListView.getSelectionModel().getSelectedIndex()).getImage().getHeight() + " x " + loadedItemList.get(imagesListView.getSelectionModel().getSelectedIndex()).getImage().getWidth());
+        imageSizeLabel.setText("" + imageView.getImage().getHeight() + " x " + imageView.getImage().getWidth());
         refreshTextEditorPane();
     }
 
@@ -409,7 +411,7 @@ public class MainWindowController implements Initializable {
         if (!list.isEmpty()) {
             loadedItemList = new ArrayList();
             loadedItemList.addAll(list);
-            imageView.setImage(loadedItemList.get(0).getImage());
+            imageView.setImage(new Image(loadedItemList.get(0).getFile().toURI().toString()));
             observableList.setAll(loadedItemList);
             imagesListView.setItems(observableList);
 
@@ -778,5 +780,9 @@ public class MainWindowController implements Initializable {
                 });
             }
         });
+    }
+
+    public ArrayList<EasyReaderItem> getLoadedItemList(){
+        return this.loadedItemList;
     }
 }

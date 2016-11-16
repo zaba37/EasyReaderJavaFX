@@ -39,6 +39,7 @@ public class Utils {
     public static final String KEY_SELECTED_OCR_LANGUAGE_KEY_NAME = "KEY_SELECTED_OCR_LANGUAGE_KEY_NAME";      
     public static final String KEY_PREFERENCES = "EasyReaderOCR";
     public static final String KEY_SHOW_INFORMATION_CROP_FUNCTION = "KEY_SHOW_INFORMATION_CROP_FUNCTION";
+    public static final String KEY_OCR_ENGINE_MODE = "KEY_OCR_ENGINE_MODE";
 
     public static final Map<String, String> languageDictionary;
 

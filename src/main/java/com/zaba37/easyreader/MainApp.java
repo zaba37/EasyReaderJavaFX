@@ -7,6 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.sourceforge.tess4j.ITessAPI;
+
+import java.util.prefs.Preferences;
 
 public class MainApp extends Application {
 
@@ -19,12 +22,16 @@ public class MainApp extends Application {
         scene.getStylesheets().add("/styles/Styles.css");
 
         stage.setTitle("Easy Reader");
+
         stage.setScene(scene);
-        
         Utils.setMainWindowController(fxmlLoader.<MainWindowController>getController());
         
         stage.show();
-        
+
+        if(Preferences.userRoot().node(Utils.KEY_PREFERENCES).getInt(Utils.KEY_OCR_ENGINE_MODE, -1) == -1){
+            Preferences.userRoot().node(Utils.KEY_PREFERENCES).putInt(Utils.KEY_OCR_ENGINE_MODE, ITessAPI.TessOcrEngineMode.OEM_TESSERACT_ONLY);
+        }
+
         Utils.setMainStage(stage);    
     }
 
