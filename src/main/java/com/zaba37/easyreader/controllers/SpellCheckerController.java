@@ -4,6 +4,7 @@ import com.zaba37.easyreader.Utils;
 import com.zaba37.easyreader.models.EasyReaderItem;
 import com.zaba37.easyreader.textEditor.ParStyle;
 import com.zaba37.easyreader.textEditor.TextStyle;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -11,16 +12,20 @@ import java.util.ResourceBundle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -28,6 +33,8 @@ import org.fxmisc.richtext.InlineCssTextArea;
 import org.fxmisc.richtext.StyledTextArea;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.languagetool.JLanguageTool;
+import org.languagetool.Language;
+import org.languagetool.Languages;
 import org.languagetool.language.AmericanEnglish;
 import org.languagetool.language.Polish;
 import org.languagetool.rules.Rule;
@@ -50,6 +57,7 @@ public class SpellCheckerController implements Initializable {
     @FXML private ListView<String> missWords;
     @FXML private HBox hbox;
     @FXML private AnchorPane anchorPane;
+    @FXML private Label languageNameLabel;
 
 
     private String replacementText; // the replacement text that will be
@@ -58,7 +66,7 @@ public class SpellCheckerController implements Initializable {
     private ObservableList<String> suggestionsList; // list for suggestions
     private ObservableList<String> missWordsList;
 
-    List<RuleMatch> matches;      // list of misspellings
+    private List<RuleMatch> matches;      // list of misspellings
     private int currentIndex;       // index for current position in misspells list
 
     private StyledTextArea<ParStyle, TextStyle> textArena;
@@ -110,15 +118,7 @@ public class SpellCheckerController implements Initializable {
         vsPane.setMaxWidth(0);
         vsPane.setMinWidth(0);
 
-        langTool = new JLanguageTool(new Polish());
-
-        for (Rule rule : langTool.getAllRules()) {
-            if (!rule.isDictionaryBasedSpellingRule()) {
-                langTool.disableRule(rule.getId());
-            }
-        }
-
-       refreshLists();
+        refreshLanguage();
     }
 
     @Override
@@ -126,6 +126,30 @@ public class SpellCheckerController implements Initializable {
     {
 
 
+    }
+
+    @FXML
+    private void setLanguageAction(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SpellCheckerLanguageController.fxml"));
+
+        Parent root = null;
+
+        try {
+            root = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        SpellCheckerLanguageController controller = fxmlLoader.<SpellCheckerLanguageController>getController();
+        controller.setPrevouseController(this);
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(Utils.getMainWindow());
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     private void nextMisspelling(int index)
@@ -291,5 +315,24 @@ public class SpellCheckerController implements Initializable {
 
         textArena.clear();
         textArena.append(item.getStyledDocument());
+    }
+
+    public void refreshLanguage(){
+
+        for(Language language : Languages.get()){
+            if(language.getName().compareTo(Preferences.userRoot().node(Utils.KEY_PREFERENCES).get(Utils.KEY_SPELL_CHECKER_LANGUAGE_NAME,"")) == 0){
+                langTool = new JLanguageTool(language);
+
+                for (Rule rule : langTool.getAllRules()) {
+                    if (!rule.isDictionaryBasedSpellingRule()) {
+                        langTool.disableRule(rule.getId());
+                    }
+                }
+
+                languageNameLabel.setText("Language: " + language.getName());
+            }
+        }
+
+        refreshLists();
     }
 }

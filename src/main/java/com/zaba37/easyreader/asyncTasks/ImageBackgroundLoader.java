@@ -6,9 +6,11 @@
 package com.zaba37.easyreader.asyncTasks;
 
 import com.zaba37.easyreader.Utils;
+import com.zaba37.easyreader.imageEditor.binaryzation.Binarization;
 import com.zaba37.easyreader.controllers.LoadingWindowSceneController;
 import com.zaba37.easyreader.models.EasyReaderItem;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,8 +18,12 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javax.imageio.ImageIO;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -61,9 +67,9 @@ public class ImageBackgroundLoader extends AsyncTask {
             if (fileCounter != this.controller.getFilesList().size()) {
 
                 if (isPDFFile(this.controller.getFilesList().get(fileCounter))) {
-                    list.addAll(pdfToEasyReaderItems(this.controller.getFilesList().get(fileCounter)));
+                    list.addAll(binarizationImageListChecker(pdfToEasyReaderItems(this.controller.getFilesList().get(fileCounter))));
                 } else {
-                    list.add(copyImageToTmpFolder(this.controller.getFilesList().get(fileCounter)));
+                    list.add(binarizationImageChecker(copyImageToTmpFolder(this.controller.getFilesList().get(fileCounter))));
                     this.publishProgress((Object) null);
                     itemCounter++;
                 }
@@ -75,6 +81,26 @@ public class ImageBackgroundLoader extends AsyncTask {
                 loading = false;
             }
         }
+    }
+
+    private EasyReaderItem binarizationImageChecker(EasyReaderItem item){
+        if(Preferences.userRoot().node(Utils.KEY_PREFERENCES).getBoolean(Utils.KEY_USE_BINARIZATION_WHEN_LOADING, false)) {
+            item.setUseBinImage(true);
+            item.getFile();
+        }
+
+        return item;
+    }
+
+    private List<EasyReaderItem> binarizationImageListChecker(List<EasyReaderItem> itemsList){
+        if(Preferences.userRoot().node(Utils.KEY_PREFERENCES).getBoolean(Utils.KEY_USE_BINARIZATION_WHEN_LOADING, false)) {
+            for (EasyReaderItem item : itemsList) {
+                item.setUseBinImage(true);
+                item.getFile();
+            }
+        }
+
+        return itemsList;
     }
 
     @Override
@@ -117,6 +143,8 @@ public class ImageBackgroundLoader extends AsyncTask {
     private List<EasyReaderItem> pdfToEasyReaderItems(File pdfFile) {
         PDFDocument document = new PDFDocument();
         ArrayList<EasyReaderItem> pdfItems = new ArrayList();
+        EasyReaderItem[] itemsTable;
+        ExecutorService executor = Executors.newWorkStealingPool();
 
         try {
             document.load(pdfFile);
@@ -135,23 +163,43 @@ public class ImageBackgroundLoader extends AsyncTask {
             Logger.getLogger(ImageBackgroundLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        itemsTable = new EasyReaderItem[images.size()];
+
         for (int i = 0; i < images.size(); i++) {
-            try {
-                if (loading) {
-                    String filePath = tmpDirPath + File.separator + pdfFile.getName() + (i + 1) + ".png";
-                    File imageFile = new File(filePath);
+            int y = i;
 
-                    ImageIO.write((RenderedImage) images.get(i), "png", imageFile);
-                    pdfItems.add(new EasyReaderItem(imageFile));
+            executor.execute(() -> {
+                try {
+                    if (loading) {
+                        String filePath = tmpDirPath + File.separator + pdfFile.getName() + (y + 1) + ".png";
+                        File imageFile = new File(filePath);
 
-                    this.publishProgress((Object) null);
-                    itemCounter++;
-                } else {
-                    break;
+                        ImageIO.write((RenderedImage) images.get(y), "png", imageFile);
+
+                        //pdfItems.add(new EasyReaderItem(imageFile));
+                        itemsTable[y] = new EasyReaderItem(imageFile);
+
+                        this.publishProgress((Object) null);
+                        itemCounter++;
+                    } else {
+                        //break;
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(ImageBackgroundLoader.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(ImageBackgroundLoader.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            });
+        }
+
+        executor.shutdown();
+
+        try {
+            executor.awaitTermination(Integer.MAX_VALUE, TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for(int i = 0; i < itemsTable.length; i++){
+            pdfItems.add(itemsTable[i]);
         }
 
         return pdfItems;

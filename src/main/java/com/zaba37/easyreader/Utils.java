@@ -40,6 +40,21 @@ public class Utils {
     public static final String KEY_PREFERENCES = "EasyReaderOCR";
     public static final String KEY_SHOW_INFORMATION_CROP_FUNCTION = "KEY_SHOW_INFORMATION_CROP_FUNCTION";
     public static final String KEY_OCR_ENGINE_MODE = "KEY_OCR_ENGINE_MODE";
+    public static final String KEY_OCR_PAGE_SEGMENTATION_MODE = "KRY_OCR_PAGE_SEGMENTATION_MODE";
+
+    public static final String KEY_NON_DICT_WORDS = "KEY_NON_DICT_WORDS";
+    public static final String KEY_PUNCTUATION = "KEY_PUNCTUATION";
+    public static final String KEY_CASE = "KEY_CASE";
+    public static final String KEY_CHARACTER_TYPE = "KEY_CHARACTER_TYPE";
+    public static final String KEY_FONT = "KEY_FONT";
+    public static final String KEY_SPACING = "KEY_SPACING";
+    public static final String KEY_NGRAM = "KEY_NGRAM";
+
+    public static final String KEY_SPELL_CHECKER_LANGUAGE_NAME = "KEY_SPELL_CHECKER_LANGUAGE_NAME";
+
+    public static final String KEY_FONT_DETECTION = "KEY_FONT_DETECTION";
+    public static final String KEY_USE_BINARIZATION_WHEN_LOADING = "KEY_USE_BINARIZATION_WHEN_LOADING";
+    public static final String KEY_OCR_RESULT_WITHOUT_FORMATING = "KEY_OCR_RESULT_WITHOUT_FORMATING";
 
     public static final Map<String, String> languageDictionary;
 

@@ -27,6 +27,7 @@
                               <MenuItem id="SaveAsDocMenuItem" mnemonicParsing="false" onAction="#handleMenuFileActions" text="DOC" />
                               <MenuItem id="SaveAsDocxMenuItem" mnemonicParsing="false" onAction="#handleMenuFileActions" text="DOCX" />
                               <MenuItem id="SaveAsPdfMenuItem" mnemonicParsing="false" onAction="#handleMenuFileActions" text="PDF" />
+                              <MenuItem id="SaveAsHTMLMenuItem" mnemonicParsing="false" onAction="#handleMenuFileActions" text="HTML" />
                           </items>
                         </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" onAction="#handleMenuFileActions" />
@@ -36,18 +37,18 @@
                 <Menu mnemonicParsing="false" text="OCR">
                   <items>
                     <MenuItem id="StartOcrMenuItem" mnemonicParsing="false" onAction="#handleOCRActions" text="Start OCR Processing" />
-                        <MenuItem id="OCRSettingsMenuItem" mnemonicParsing="false" onAction="#handleOCRActions" text="OCR Settings" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Image">
+                <Menu mnemonicParsing="false" text="Text">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem id="spellChecker" mnemonicParsing="false" onAction="#handleTxtActions" text="Spell checker" />
+                        <MenuItem id="replaceText" mnemonicParsing="false" onAction="#handleTxtActions" text="Replace text" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Settings">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                    </items>
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#settingsAction" text="Settings" />
+                     </items>
                   </Menu>
               </menus>
             </MenuBar>
@@ -162,6 +163,11 @@
                                     <Insets bottom="7.0" right="2.0" top="6.0" />
                                  </HBox.margin>
                               </Button>
+                              <ToggleButton id="binarizationImageButton" fx:id="binarizationButton" focusTraversable="false" layoutX="172.0" layoutY="16.0" mnemonicParsing="false" onAction="#binarizationButtonEvent" prefHeight="30.0" prefWidth="30.0" style="-fx-graphic: url('/image/imageEditorResource/binarizationIcon.png');">
+                                 <HBox.margin>
+                                    <Insets bottom="7.0" right="2.0" top="6.0" />
+                                 </HBox.margin>
+                              </ToggleButton>
                            </children>
                         </HBox>
                      </children>

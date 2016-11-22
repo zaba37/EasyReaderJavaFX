@@ -218,6 +218,442 @@
                               </VBox>
                            </children>
                         </GridPane>
+                        <GridPane fx:id="ocrPageSegmentationModeGridPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label maxWidth="1.7976931348623157E308" text="OCR Pagination Mode">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_OSD_ONLY_RB" mnemonicParsing="false" text="Orientation and script detection only">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_AUTO_OSD_RB" mnemonicParsing="false" text="Automatic page segmentation with orientation and script detection. (OSD)">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_AUTO_ONLY_RB" mnemonicParsing="false" text="Automatic page segmentation, but no OSD, or OCR.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_AUTO_RB" mnemonicParsing="false" text="Fully automatic page segmentation, but no OSD.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_SINGLE_COLUMN_RB" mnemonicParsing="false" text="Assume a single column of text of variable sizes.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_SINGLE_BLOCK_VERT_TEXT_RB" mnemonicParsing="false" text="Assume a single uniform block of vertically aligned text.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_SINGLE_BLOCK_RB" mnemonicParsing="false" text="Assume a single uniform block of text.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_SINGLE_LINE_RB" mnemonicParsing="false" text="Treat the image as a single text line.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_SINGLE_WORD_RB" mnemonicParsing="false" text="Treat the image as a single word.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_CIRCLE_WORD_RB" mnemonicParsing="false" text="Treat the image as a single word in a circle.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_SINGLE_CHAR_RB" mnemonicParsing="false" text="Treat the image as a single character.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_SPARSE_TEXT_RB" mnemonicParsing="false" text="Find as much text as possible in no particular order.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox maxHeight="17.0" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <RadioButton fx:id="PSM_SPARSE_TEXT_OSD_RB" mnemonicParsing="false" text="Sparse text with orientation and script detection.">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" top="5.0" />
+                                 </GridPane.margin>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <GridPane fx:id="languageModelPenalityGridPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Language Model Penalty">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="223.0" text="Penalty for non-dictionary words">
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" left="10.0" top="2.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Slider fx:id="nonDictionaryWordsSlider" blockIncrement="1.0" prefHeight="14.0" prefWidth="165.0">
+                                             <HBox.margin>
+                                                <Insets right="2.0" />
+                                             </HBox.margin>
+                                          </Slider>
+                                          <TextField fx:id="nonDictionaryWordsTB" prefHeight="25.0" prefWidth="40.0" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="2.0" left="10.0" top="2.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="5.0" />
+                                       </VBox.margin>
+                                    </Separator>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="223.0" text="Penalty for inconsistent punctuation">
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" left="10.0" top="2.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Slider fx:id="punctuationSlider" blockIncrement="1.0" prefHeight="14.0" prefWidth="165.0">
+                                             <HBox.margin>
+                                                <Insets right="2.0" />
+                                             </HBox.margin>
+                                          </Slider>
+                                          <TextField fx:id="punctuationTB" prefHeight="25.0" prefWidth="40.0" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="2.0" left="10.0" top="2.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="5.0" />
+                                       </VBox.margin>
+                                    </Separator>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="223.0" text="Penalty for inconsistent case">
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" left="10.0" top="2.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Slider fx:id="caseSlider" blockIncrement="1.0" prefWidth="165.0">
+                                             <HBox.margin>
+                                                <Insets right="2.0" />
+                                             </HBox.margin>
+                                          </Slider>
+                                          <TextField fx:id="caseTB" prefHeight="25.0" prefWidth="40.0" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="2.0" left="10.0" top="2.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="5.0" />
+                                       </VBox.margin>
+                                    </Separator>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="223.0" text="Penalty for inconsistent character type">
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" left="10.0" top="2.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Slider fx:id="characterTypeSlider" blockIncrement="1.0" prefWidth="165.0">
+                                             <HBox.margin>
+                                                <Insets right="2.0" />
+                                             </HBox.margin>
+                                          </Slider>
+                                          <TextField fx:id="characterTypeTB" prefHeight="25.0" prefWidth="40.0" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="2.0" left="10.0" top="2.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="5.0" />
+                                       </VBox.margin>
+                                    </Separator>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="223.0" text="Penalty for inconsistent font">
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" left="10.0" top="2.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Slider fx:id="fontSlider" blockIncrement="1.0" prefWidth="165.0">
+                                             <HBox.margin>
+                                                <Insets right="2.0" />
+                                             </HBox.margin>
+                                          </Slider>
+                                          <TextField fx:id="fontTB" prefHeight="25.0" prefWidth="40.0" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="2.0" left="10.0" top="2.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="5.0" />
+                                       </VBox.margin>
+                                    </Separator>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="223.0" text="Penalty for inconsistent spacing">
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" left="10.0" top="2.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Slider fx:id="spacingSlider" blockIncrement="1.0" prefWidth="165.0">
+                                             <HBox.margin>
+                                                <Insets right="2.0" />
+                                             </HBox.margin>
+                                          </Slider>
+                                          <TextField fx:id="spacingTB" prefHeight="25.0" prefWidth="40.0" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="2.0" left="10.0" top="2.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="5.0" />
+                                       </VBox.margin>
+                                    </Separator>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label prefHeight="34.0" prefWidth="223.0" text="Strength of the character ngram model relative to the character classifier" wrapText="true">
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" left="10.0" top="2.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Slider fx:id="ngramSlider" blockIncrement="1.0" prefWidth="165.0">
+                                             <HBox.margin>
+                                                <Insets right="2.0" />
+                                             </HBox.margin>
+                                          </Slider>
+                                          <TextField fx:id="ngramTB" prefHeight="25.0" prefWidth="40.0" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="2.0" left="10.0" top="2.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="initialValuesButton" mnemonicParsing="false" onAction="#actionSetToInitialModelPenality" text="Set to initial values" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" top="5.0" />
+                                 </GridPane.margin>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <GridPane fx:id="otherGridPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" top="5.0" />
+                                 </GridPane.margin>
+                                 <children>
+                                    <Label text="Other">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckBox fx:id="fontDetectionCB" mnemonicParsing="false" text="Font detection">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </CheckBox>
+                                    <CheckBox fx:id="resultAsStringCB" mnemonicParsing="false" text="OCR result text without formatting">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </CheckBox>
+                                    <CheckBox fx:id="useBinWhenLoadingImageCB" mnemonicParsing="false" text="Use binarization when loading images" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
                      </children>
                   </AnchorPane>
                </center>

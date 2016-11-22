@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxWidth="340.0" minWidth="340.0" prefHeight="400.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zaba37.easyreader.controllers.PageToSaveChooser">
+    <children>
+        <AnchorPane maxWidth="340.0" minWidth="340.0" prefHeight="200.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <BorderPane maxWidth="300.0" minWidth="300.0" prefHeight="251.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <bottom>
+                        <VBox maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <Separator maxWidth="1.7976931348623157E308" prefWidth="200.0" />
+                                <HBox alignment="TOP_RIGHT">
+                                    <children>
+                                        <Button maxHeight="22.0" minHeight="22.0" mnemonicParsing="false" onAction="#handleApplyAction" text="Apply" textAlignment="CENTER">
+                                            <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="1.0" />
+                                            </HBox.margin>
+                                            <font>
+                                                <Font size="11.0" />
+                                            </font>
+                                        </Button>
+                                        <Button maxHeight="22.0" minHeight="22.0" mnemonicParsing="false" onAction="#handleCancelAction" text="Cancel" textAlignment="CENTER">
+                                            <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="1.0" />
+                                            </HBox.margin>
+                                            <font>
+                                                <Font size="11.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </bottom>
+                    <center>
+                        <AnchorPane maxWidth="300.0" minWidth="340.0" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <VBox layoutX="250.0" layoutY="85.0" maxWidth="300.0" minWidth="300.0" prefHeight="200.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <VBox alignment="TOP_CENTER" maxWidth="340.0" minWidth="340.0" prefHeight="35.0" prefWidth="340.0">
+                                            <children>
+                                                <Label alignment="CENTER" contentDisplay="TOP" prefHeight="35.0" prefWidth="216.0" text="Images to select " textAlignment="CENTER">
+                                                    <font>
+                                                        <Font size="20.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <ListView fx:id="listView" maxWidth="340.0" minWidth="340.0" prefHeight="310.0" prefWidth="340.0" VBox.vgrow="NEVER">
+                                            <VBox.margin>
+                                                <Insets />
+                                            </VBox.margin></ListView>
+                                        <HBox prefHeight="30.0" prefWidth="200.0">
+                                            <children>
+                                                <CheckBox fx:id="selectAllBox" mnemonicParsing="false" text="Select all">
+                                                    <HBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" top="5.0" />
+                                                    </HBox.margin>
+                                                </CheckBox>
+                                            </children></HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </center>
+                </BorderPane>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

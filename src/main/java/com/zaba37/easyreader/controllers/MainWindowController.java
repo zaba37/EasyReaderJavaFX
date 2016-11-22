@@ -53,6 +53,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -76,6 +77,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import javafx.scene.text.*;
 
+import org.docx4j.openpackaging.io3.Save;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.InlineCssTextArea;
 import org.fxmisc.richtext.StyledTextArea;
@@ -115,6 +117,7 @@ public class MainWindowController implements Initializable {
     @FXML private Group imageGroup;
     @FXML private AnchorPane textAreaArchorPane;
     @FXML private AnchorPane mainAnchorPane;
+    @FXML private ToggleButton binarizationButton;
 
     private DoubleProperty zoomProperty;
     private Group textEditorScrollGroup;
@@ -226,6 +229,16 @@ public class MainWindowController implements Initializable {
     @FXML
     private void handleMenuFileActions(ActionEvent event) {
         MenuItem item = (MenuItem) event.getSource();
+        boolean saveFlag = false;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PageToSaveChooser.fxml"));
+
+        Parent root = null;
+        try {
+            root = (Parent) fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PageToSaveChooser controller = fxmlLoader.<PageToSaveChooser>getController();
 
         switch (item.getId()) {
             case "OpenMenuItem":
@@ -234,55 +247,42 @@ public class MainWindowController implements Initializable {
                 break;
             case "SaveAsTxtMenuItem":
                 System.out.print("TXT");
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SpellCheckerController.fxml"));
-
-                Parent root = null;
-
-                try {
-                    root = (Parent) fxmlLoader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                SpellCheckerController controller = fxmlLoader.<SpellCheckerController>getController();
-                controller.init(loadedItemList.get(currentSelectedItemIndex));
-
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.initOwner(Utils.getMainWindow());
-                stage.setScene(scene);
-                stage.setResizable(false);
-                stage.show();
-
+                saveFlag = true;
+                controller.setDocumentType(PageToSaveChooser.DocumentType.TXT);
                 break;
             case "SaveAsDocMenuItem":
                 System.out.print("DOC");
-                FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("/fxml/ReplaceWordController.fxml"));
-                Stage stage2 = new Stage();
-                Parent root2 = null;
-                try {
-                    root2 = (Parent)fxmlLoader2.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Scene scene2 = new Scene(root2);
-
-                stage2.setScene(scene2);
-                stage2.setAlwaysOnTop(true);
-                stage2.show();
+                saveFlag = true;
+                controller.setDocumentType(PageToSaveChooser.DocumentType.DOC);
                 break;
             case "SaveAsDocxMenuItem":
                 System.out.print("DOCX");
-                SaveManager.getInstance().saveToDOCX(loadedItemList.get(currentSelectedItemIndex).getStyledDocument());
+                saveFlag = true;
+                controller.setDocumentType(PageToSaveChooser.DocumentType.DOCX);
                 break;
             case "SaveAsPdfMenuItem":
                 System.out.print("PDF");
-                SaveManager.getInstance().saveToPDF(loadedItemList.get(currentSelectedItemIndex).getStyledDocument());
+                saveFlag = true;
+                controller.setDocumentType(PageToSaveChooser.DocumentType.PDF);
+                break;
+            case "SaveAsHTMLMenuItem":
+                saveFlag = true;
+                controller.setDocumentType(PageToSaveChooser.DocumentType.HTML);
                 break;
             case "ExitMenuItem":
                 System.out.print("EXIT");
                 break;
+        }
+
+        if (saveFlag){
+            controller.setLoadedItemList(loadedItemList);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(Utils.getMainWindow());
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
         }
 
     }
@@ -311,16 +311,62 @@ public class MainWindowController implements Initializable {
                 }
 
                 break;
-            case "OCRSettingsMenuItem":
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/OCRSettingsScene.fxml"));
+        }
+    }
+
+    @FXML
+    private void settingsAction() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/OCRSettingsScene.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(Utils.getMainWindow());
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    private void handleTxtActions(ActionEvent event){
+        MenuItem item = (MenuItem) event.getSource();
+
+        switch (item.getId()){
+            case "spellChecker":
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SpellCheckerController.fxml"));
+
+                Parent root = null;
+
+                try {
+                    root = (Parent) fxmlLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                SpellCheckerController controller = fxmlLoader.<SpellCheckerController>getController();
+                controller.init(loadedItemList.get(currentSelectedItemIndex));
+
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
-                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initOwner(Utils.getMainWindow());
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.show();
+                break;
+            case "replaceText":
+                FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("/fxml/ReplaceWordController.fxml"));
+                Stage stage2 = new Stage();
+                Parent root2 = null;
+                try {
+                    root2 = (Parent)fxmlLoader2.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Scene scene2 = new Scene(root2);
 
+                stage2.setScene(scene2);
+                stage2.setAlwaysOnTop(true);
+                stage2.show();
                 break;
         }
     }
@@ -353,6 +399,21 @@ public class MainWindowController implements Initializable {
                 }
                 break;
         }
+    }
+
+    @FXML
+    private void binarizationButtonEvent(){
+        if(binarizationButton.isSelected()){
+            loadedItemList.get(currentSelectedItemIndex).setUseBinImage(true);
+        }else{
+            loadedItemList.get(currentSelectedItemIndex).setUseBinImage(false);
+        }
+
+        imageView.setImage(new Image(loadedItemList.get(currentSelectedItemIndex).getFile().toURI().toString()));
+    }
+
+    private void checkBinarizationButtonState(){
+            binarizationButton.setSelected(loadedItemList.get(currentSelectedItemIndex).isUseBinImage());
     }
 
     private void openAction() {
@@ -397,6 +458,7 @@ public class MainWindowController implements Initializable {
         currentSelectedItemIndex = imagesListView.getSelectionModel().getSelectedIndex();
         imageSizeLabel.setText("" + imageView.getImage().getHeight() + " x " + imageView.getImage().getWidth());
         refreshTextEditorPane();
+        checkBinarizationButtonState();
     }
 
     public void addNewEasyReaderItemToList(EasyReaderItem item){
@@ -414,6 +476,7 @@ public class MainWindowController implements Initializable {
             imageView.setImage(new Image(loadedItemList.get(0).getFile().toURI().toString()));
             observableList.setAll(loadedItemList);
             imagesListView.setItems(observableList);
+            imagesListView.getSelectionModel().select(0);
 
             imagesListView.setCellFactory(new Callback<ListView<EasyReaderItem>, javafx.scene.control.ListCell<EasyReaderItem>>() {
                 @Override
@@ -431,6 +494,7 @@ public class MainWindowController implements Initializable {
             currentSelectedItemIndex = 0;
 
             refreshTextEditorPane();
+            checkBinarizationButtonState();
         } else {
             loadedItemList = new ArrayList();
         }

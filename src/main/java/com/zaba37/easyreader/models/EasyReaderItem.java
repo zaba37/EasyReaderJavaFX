@@ -6,6 +6,7 @@
 package com.zaba37.easyreader.models;
 
 import com.zaba37.easyreader.Utils;
+import com.zaba37.easyreader.imageEditor.binaryzation.Binarization;
 import com.zaba37.easyreader.textEditor.ParStyle;
 import com.zaba37.easyreader.textEditor.TextStyle;
 
@@ -37,15 +38,19 @@ import javax.swing.text.StyledDocument;
 public class EasyReaderItem {
 
     private final File imageFile;
+    private File binImageFile;
+    private boolean useBinImage;
     private Image image;
     private final String name;
+    private String hOCR;
     private StyledTextArea<ParStyle, TextStyle> textArea;
 
     public EasyReaderItem(File file) {
         this.imageFile = file;
+        useBinImage = false;
 
         try {
-            image = scale(ImageIO.read(file), 0.3);//new Image(file.toURI().toString());
+            image = scale(ImageIO.read(file), 0.3);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +97,11 @@ public class EasyReaderItem {
         SwingFXUtils.toFXImage(newImage, writableImage);
 
         try {
-            bufferedImage = ImageIO.read(imageFile);
+            if(useBinImage) {
+                bufferedImage = ImageIO.read(binImageFile);
+            }else{
+                bufferedImage = ImageIO.read(imageFile);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,12 +121,16 @@ public class EasyReaderItem {
         op.filter(bufferedImage, newImage);
 
         try {
-            ImageIO.write(newImage, "png", imageFile);
+            if(useBinImage) {
+                ImageIO.write(newImage, "png", binImageFile);
+            }else{
+                ImageIO.write(newImage, "png", imageFile);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        this.image = writableImage;
+        this.image = scale(newImage, 0.3);
     }
 
     private Image scale(BufferedImage source, double ratio) {
@@ -159,7 +172,15 @@ public class EasyReaderItem {
     }
 
     public File getFile() {
-        return imageFile;
+        if(useBinImage){
+            if(binImageFile == null) {
+                binImageFile = Binarization.binarize(imageFile);
+            }
+
+            return binImageFile;
+        }else {
+            return imageFile;
+        }
     }
 
     public org.fxmisc.richtext.model.StyledDocument getStyledDocument(){
@@ -170,4 +191,19 @@ public class EasyReaderItem {
         return textArea;
     }
 
+    public void setUseBinImage(boolean value){
+        this.useBinImage = value;
+    }
+
+    public boolean isUseBinImage(){
+        return this.useBinImage;
+    }
+
+    public void sethOCR(String hOCR){
+        this.hOCR = hOCR;
+    }
+
+    public String gethOCR(){
+        return hOCR;
+    }
 }

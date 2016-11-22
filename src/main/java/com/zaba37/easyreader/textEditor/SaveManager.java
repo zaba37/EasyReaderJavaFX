@@ -1,6 +1,7 @@
 package com.zaba37.easyreader.textEditor;
 
 import com.zaba37.easyreader.Utils;
+import com.zaba37.easyreader.models.EasyReaderItem;
 import javafx.stage.FileChooser;
 import org.apache.poi.xwpf.usermodel.*;
 import org.docx4j.Docx4J;
@@ -12,14 +13,13 @@ import org.fxmisc.richtext.model.StyledText;
 
 import javax.swing.text.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.docx4j.convert.out.*;
 
@@ -42,11 +42,66 @@ public class SaveManager {
     private SaveManager() {
     }
 
-    public void saveToDOCX(org.fxmisc.richtext.model.StyledDocument styledDocument) {
+    public void saveToTXT(ArrayList<EasyReaderItem> items){
         FileChooser chooser = new FileChooser();
-        File file = chooser.showSaveDialog(Utils.getMainStage());
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        File file;
+
+        chooser.getExtensionFilters().add(extFilter);
+        file = chooser.showSaveDialog(Utils.getMainStage());
+
+        try {
+            FileWriter fileWriter = null;
+
+            fileWriter = new FileWriter(file);
+
+            //fileWriter.write(styledDocument.getText() + "\n");
+
+            for(EasyReaderItem item : items){
+                for(Paragraph paragraph : item.getTextArea().getDocument().getParagraphs()){
+                    fileWriter.write(paragraph.getText() +"\n");
+                }
+            }
+
+            fileWriter.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void saveToHtml(ArrayList<EasyReaderItem> items){
+        FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
+        File file;
+
+        chooser.getExtensionFilters().add(extFilter);
+        file = chooser.showSaveDialog(Utils.getMainStage());
+
+        try {
+
+            FileWriter fileWriter = null;
+
+            fileWriter = new FileWriter(file);
+
+            for(EasyReaderItem item : items){
+                fileWriter.write(item.gethOCR());
+            }
+
+            fileWriter.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void saveToDOC(ArrayList<EasyReaderItem> items) {
+        FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("DOC files (*.doc)", "*.doc");
+        File file;
         FileOutputStream out;
-        XWPFDocument document = wordFileCreator(styledDocument);
+        XWPFDocument document = wordFileCreator(items);
+
+        chooser.getExtensionFilters().add(extFilter);
+        file = chooser.showSaveDialog(Utils.getMainStage());
 
         try {
             out = new FileOutputStream(file);
@@ -58,15 +113,38 @@ public class SaveManager {
         }
     }
 
-    public void saveToPDF(org.fxmisc.richtext.model.StyledDocument styledDocument) {
+    public void saveToDOCX(ArrayList<EasyReaderItem> items) {
         FileChooser chooser = new FileChooser();
-        File file = chooser.showSaveDialog(Utils.getMainStage());
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("DOCX files (*.docx)", "*.docx");
+        File file;
+        FileOutputStream out;
+        XWPFDocument document = wordFileCreator(items);
+
+        chooser.getExtensionFilters().add(extFilter);
+        file = chooser.showSaveDialog(Utils.getMainStage());
+
+        try {
+            out = new FileOutputStream(file);
+            document.write(out);
+            out.close();
+            System.out.println(file.getAbsolutePath() + " written successfully");
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveToPDF(ArrayList<EasyReaderItem> items) {
+        FileChooser chooser = new FileChooser();
+        File file;
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
         FileOutputStream out = null;
         FileInputStream in = null;
         File tmpFile = null;
-        XWPFDocument document = wordFileCreator(styledDocument);
+        XWPFDocument document = wordFileCreator(items);
         String tmpFileName = "tmp.docx";
 
+        chooser.getExtensionFilters().add(extFilter);
+        file = chooser.showSaveDialog(Utils.getMainStage());
 
         try {
             tmpFile = new File(tmpFileName);
@@ -105,74 +183,78 @@ public class SaveManager {
         }
     }
 
-    private XWPFDocument wordFileCreator(org.fxmisc.richtext.model.StyledDocument styledDocument) {
-        List<Paragraph> paragraphs = styledDocument.getParagraphs();
+    private XWPFDocument wordFileCreator(ArrayList<EasyReaderItem> items) {
+
         XWPFDocument document = new XWPFDocument();
 
-        for (Paragraph paragraph : paragraphs) {
-            ParStyle paragraphStyle = (ParStyle) paragraph.getParagraphStyle();
-            XWPFParagraph paragraphDocx = document.createParagraph();
-            XWPFRun run = paragraphDocx.createRun();
+        for(EasyReaderItem item : items) {
+            List<Paragraph> paragraphs = new ArrayList<>();
+            paragraphs.addAll(item.getStyledDocument().getParagraphs());
 
-            for (Object object : paragraph.getSegments()) {
-                StyledText segment = (StyledText) object;
-                TextStyle segmentTextStyle = (TextStyle) segment.getStyle();
+            for (Paragraph paragraph : paragraphs) {
+                ParStyle paragraphStyle = (ParStyle) paragraph.getParagraphStyle();
+                XWPFParagraph paragraphDocx = document.createParagraph();
+                XWPFRun run = paragraphDocx.createRun();
 
-                if (segmentTextStyle.bold.toString().contains("Optional[true]")) {
-                    run.setBold(true);
+                for (Object object : paragraph.getSegments()) {
+                    StyledText segment = (StyledText) object;
+                    TextStyle segmentTextStyle = (TextStyle) segment.getStyle();
+
+                    if (segmentTextStyle.bold.toString().contains("Optional[true]")) {
+                        run.setBold(true);
+                    }
+
+                    if (segmentTextStyle.italic.toString().contains("Optional[true]")) {
+                        run.setItalic(true);
+                    }
+
+                    if (segmentTextStyle.underline.toString().contains("Optional[true]")) {
+                        run.setUnderline(UnderlinePatterns.SINGLE);
+                    }
+
+                    if (segmentTextStyle.strikethrough.toString().contains("Optional[true]")) {
+                        run.setStrikeThrough(true);
+                    }
+
+                    if (!segmentTextStyle.backgroundColor.toString().contains("Optional.empty")) {
+                        java.awt.Color awtColor;
+                        javafx.scene.paint.Color currentColor = segmentTextStyle.backgroundColor.get();
+
+                        awtColor = new Color((float) currentColor.getRed(), (float) currentColor.getGreen(), (float) currentColor.getBlue(), (float) currentColor.getOpacity());
+
+                    }
+
+                    if (!segmentTextStyle.textColor.toString().contains("Optional.empty")) {
+                        java.awt.Color awtColor;
+                        javafx.scene.paint.Color currentColor = segmentTextStyle.textColor.get();
+
+                        awtColor = new Color((float) currentColor.getRed(), (float) currentColor.getGreen(), (float) currentColor.getBlue(), (float) currentColor.getOpacity());
+
+                        //run.setColor(String.valueOf(awtColor.getRGB()));
+                    }
+
+                    run.setFontFamily(segmentTextStyle.fontFamily.get());
+                    run.setFontSize(segmentTextStyle.fontSize.get());
+
+                    run.setText(segment.getText());
                 }
 
-                if (segmentTextStyle.italic.toString().contains("Optional[true]")) {
-                    run.setItalic(true);
+                switch (paragraphStyle.alignment.toString()) {
+                    case "Optional[CENTER]":
+                        paragraphDocx.setAlignment(ParagraphAlignment.CENTER);
+                        break;
+                    case "Optional[LEFT]":
+                        paragraphDocx.setAlignment(ParagraphAlignment.LEFT);
+                        break;
+                    case "Optional[RIGHT]":
+                        paragraphDocx.setAlignment(ParagraphAlignment.RIGHT);
+                        break;
+                    case "Optional[JUSTIFY]":
+                        paragraphDocx.setAlignment(ParagraphAlignment.BOTH);
+                        break;
                 }
-
-                if (segmentTextStyle.underline.toString().contains("Optional[true]")) {
-                    run.setUnderline(UnderlinePatterns.SINGLE);
-                }
-
-                if (segmentTextStyle.strikethrough.toString().contains("Optional[true]")) {
-                    run.setStrikeThrough(true);
-                }
-
-                if (!segmentTextStyle.backgroundColor.toString().contains("Optional.empty")) {
-                    java.awt.Color awtColor;
-                    javafx.scene.paint.Color currentColor = segmentTextStyle.backgroundColor.get();
-
-                    awtColor = new Color((float) currentColor.getRed(), (float) currentColor.getGreen(), (float) currentColor.getBlue(), (float) currentColor.getOpacity());
-
-                }
-
-                if (!segmentTextStyle.textColor.toString().contains("Optional.empty")) {
-                    java.awt.Color awtColor;
-                    javafx.scene.paint.Color currentColor = segmentTextStyle.textColor.get();
-
-                    awtColor = new Color((float) currentColor.getRed(), (float) currentColor.getGreen(), (float) currentColor.getBlue(), (float) currentColor.getOpacity());
-
-                    //run.setColor(String.valueOf(awtColor.getRGB()));
-                }
-
-                run.setFontFamily(segmentTextStyle.fontFamily.get());
-                run.setFontSize(segmentTextStyle.fontSize.get());
-
-                run.setText(segment.getText());
-            }
-
-            switch (paragraphStyle.alignment.toString()) {
-                case "Optional[CENTER]":
-                    paragraphDocx.setAlignment(ParagraphAlignment.CENTER);
-                    break;
-                case "Optional[LEFT]":
-                    paragraphDocx.setAlignment(ParagraphAlignment.LEFT);
-                    break;
-                case "Optional[RIGHT]":
-                    paragraphDocx.setAlignment(ParagraphAlignment.RIGHT);
-                    break;
-                case "Optional[JUSTIFY]":
-                    paragraphDocx.setAlignment(ParagraphAlignment.BOTH);
-                    break;
             }
         }
-
         return document;
     }
 

@@ -126,5 +126,6 @@
     <orderEntry type="library" name="Maven: org.languagetool:language-ta:3.5" level="project" />
     <orderEntry type="library" name="Maven: org.languagetool:language-tl:3.5" level="project" />
     <orderEntry type="library" name="Maven: org.languagetool:language-uk:3.5" level="project" />
+    <orderEntry type="library" name="Maven: nu.pattern:opencv:2.4.9-4" level="project" />
   </component>
 </module>

@@ -1,5 +1,6 @@
 package com.zaba37.easyreader.asyncTasks;
 
+import com.zaba37.easyreader.Utils;
 import com.zaba37.easyreader.models.EasyReaderItem;
 import com.zaba37.easyreader.ocr.OcrEngine;
 import io.github.karols.hocr4j.Bounds;
@@ -18,6 +19,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.util.*;
+import java.util.prefs.Preferences;
 
 /**
  * Created by zaba3 on 06.11.2016.
@@ -50,117 +52,119 @@ public class OCRProgressController extends AsyncTask {
         for(EasyReaderItem i : list) {
             if (!cancel) {
                 result = ocrEngine.getOcrResult(i.getFile());
+
                 ArrayList<Page> pages = new ArrayList<>();
                 ArrayList<String> textLines = new ArrayList<>();
-
                 List<HocrElement> a = HocrParser.createAst(result);
-
                 List<Page> page = HocrParser.parse(a);
-
                 ArrayList<Word> wordsList = new ArrayList<>();
 
-                wordsList.addAll(page.get(0).getAllWords());
+                i.sethOCR(result);
+
+                for(Page p : page){
+                    wordsList.addAll(p.getAllWords());
+                }
 
                 HashMap<Bounds, Word> wordsMap = new HashMap<>();
                 linesMap = new HashMap<>();
 
-                for(Word word : wordsList) {
-                    if(word.getBounds() != null) {
-                        wordsMap.put(word.getBounds(), word);
+                Platform.runLater(() -> i.getTextArea().clear());
+
+                if(!Preferences.userRoot().node(Utils.KEY_PREFERENCES).getBoolean(Utils.KEY_OCR_RESULT_WITHOUT_FORMATING, false)) {
+                    for (Word word : wordsList) {
+                        if (word.getBounds() != null) {
+                            wordsMap.put(word.getBounds(), word);
+                        }
                     }
-                }
 
-                int lineNumber = 0;
+                    int lineNumber = 0;
 
-                //segregate words by lines
-                for(Bounds bounds : wordsMap.keySet()){
-                    ArrayList<Word> newWodsInLineList = new ArrayList<>();
+                    //segregate words by lines
+                    for (Bounds bounds : wordsMap.keySet()) {
+                        ArrayList<Word> newWodsInLineList = new ArrayList<>();
 
-                    if(linesMap.size() == 0){
-                        newWodsInLineList.add(wordsMap.get(bounds));
-                        linesMap.put(lineNumber, newWodsInLineList);
-                        lineNumber += 1;
-                    }else{
-                        boolean addedWordToLine = false;
+                        if (linesMap.size() == 0) {
+                            newWodsInLineList.add(wordsMap.get(bounds));
+                            linesMap.put(lineNumber, newWodsInLineList);
+                            lineNumber += 1;
+                        } else {
+                            boolean addedWordToLine = false;
 
-                        for(Integer line: linesMap.keySet()){
-                            for(Word word : linesMap.get(line)){
-                                if(word.getBounds().inTheSameRowAs(bounds)){
-                                    ArrayList<Word> wordArrayListFromMap = linesMap.get(line);
-                                    wordArrayListFromMap.add(wordsMap.get(bounds));
+                            for (Integer line : linesMap.keySet()) {
+                                for (Word word : linesMap.get(line)) {
+                                    if (word.getBounds().inTheSameRowAs(bounds)) {
+                                        ArrayList<Word> wordArrayListFromMap = linesMap.get(line);
+                                        wordArrayListFromMap.add(wordsMap.get(bounds));
 
-                                    linesMap.put(line, wordArrayListFromMap);
+                                        linesMap.put(line, wordArrayListFromMap);
 
-                                    addedWordToLine = true;
+                                        addedWordToLine = true;
+                                    }
+
+                                    if (addedWordToLine) {
+                                        break;
+                                    }
                                 }
 
-                                if(addedWordToLine){
+                                if (addedWordToLine) {
                                     break;
                                 }
                             }
 
-                            if(addedWordToLine){
-                                break;
+                            if (!addedWordToLine) {
+                                newWodsInLineList.add(wordsMap.get(bounds));
+                                linesMap.put(lineNumber, newWodsInLineList);
+                                lineNumber += 1;
                             }
-                        }
-
-                        if(!addedWordToLine){
-                            newWodsInLineList.add(wordsMap.get(bounds));
-                            linesMap.put(lineNumber, newWodsInLineList);
-                            lineNumber += 1;
-                        }
-                    }
-                }
-
-                for(Integer line : linesMap.keySet()){
-                    quickSortWordsInLine(linesMap.get(line),0, linesMap.get(line).size() - 1);
-                }
-
-                linesList = new ArrayList<>();
-
-                for(Integer line : linesMap.keySet()){
-                    linesList.add(linesMap.get(line));
-                }
-
-                quicksortPageByLines(linesList, 0, linesList.size() - 1);
-
-                for(ArrayList<Word> words : linesList){
-                    String line = "";
-
-                    for(int x = 0; x < words.size(); x++){
-                        if((words.size() - 1) >= (x + 1)) {
-                            int distans = words.get(x).getBounds().distance(words.get(x + 1).getBounds());
-
-                            int spacesNumber = distans / 100;
-
-                            line += words.get(x).getText();
-
-                            for(int z = 0; z <= spacesNumber; z++){
-                                line += " ";
-                            }
-
-                            System.out.println(distans);
-                        }else{
-                            line += words.get(x).getText();
                         }
                     }
 
-                    textLines.add(line);
+                    for (Integer line : linesMap.keySet()) {
+                        quickSortWordsInLine(linesMap.get(line), 0, linesMap.get(line).size() - 1);
+                    }
+
+                    linesList = new ArrayList<>();
+
+                    for (Integer line : linesMap.keySet()) {
+                        linesList.add(linesMap.get(line));
+                    }
+
+                    quicksortPageByLines(linesList, 0, linesList.size() - 1);
+
+                    for (ArrayList<Word> words : linesList) {
+                        String line = "";
+
+                        for (int x = 0; x < words.size(); x++) {
+                            if ((words.size() - 1) >= (x + 1)) {
+                                int distans = words.get(x).getBounds().distance(words.get(x + 1).getBounds());
+
+                                int spacesNumber = distans / 100;
+
+                                line += words.get(x).getText();
+
+                                for (int z = 0; z <= spacesNumber; z++) {
+                                    line += " ";
+                                }
+
+                                System.out.println(distans);
+                            } else {
+                                line += words.get(x).getText();
+                            }
+                        }
+
+                        textLines.add(line);
+                    }
+                }else {
+                    pages.addAll(HocrParser.parse(result));
+
+                    for(Page p : pages){
+                        textLines.addAll(p.getAllLinesAsStrings());
+                    }
                 }
-
-               // pages.addAll(HocrParser.parse(result));
-               // textLines.addAll(pages.get(0).getAllLinesAsStrings());
-
-         //       Document doc = Jsoup.parse(result);
 
                 for (String line : textLines) {
 
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            i.getTextArea().appendText(line + "\n");
-                        }
-                    });
+                    Platform.runLater(() -> i.getTextArea().appendText(line + "\n"));
                 }
 
                 this.publishProgress();
